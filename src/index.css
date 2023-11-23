@@ -1,0 +1,37 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+  scrollbar-width: thin;
+}
+
+@layer components {
+  .scroll1 {
+    scrollbar-color: #b3b3b3 #262626 !important;
+  }
+  .scroll2 {
+    scrollbar-color: #5c5c5c #f6f6f6 !important;
+  }
+  .scroll3 {
+    scrollbar-color: #bec6cf #181c20 !important;
+  }
+}
+
+.markdown > * {
+  margin-bottom: 1rem;
+}
+
+#frame h1 {
+  font-size: 4rem;
+  line-height: 4rem;
+  color: red;
+}
+#frame h2 {
+  font-size: 3rem;
+  color: green;
+}
+#frame h3 {
+  font-size: 3rem;
+  color: blue;
+}
