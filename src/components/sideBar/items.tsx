@@ -15,9 +15,7 @@ export default function Items() {
     "kjvni",
     "fwbtd",
   ]);
-
-  console.log();
-
+  
   const itemsMap = items.map((item, index) => (
     <button
       key={index}
