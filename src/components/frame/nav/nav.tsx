@@ -1,42 +1,36 @@
 import { useStore } from "zustand";
 import { themeStore } from "../../../stores/themeStore";
 import { useState } from "react";
-import { useHover } from "@uidotdev/usehooks";
+import { editorStore } from "../../../stores/editorStore";
 
-export default function Nav({
-  setSourceMode,
-}: {
-  setSourceMode: (e: (e: boolean) => boolean) => void;
-}) {
+export default function Nav() {
   const { currentTheme } = useStore(themeStore);
+  const { setCurrentPage, setSourceMode, tabs, setTabs } =
+    useStore(editorStore);
   const [focus, setFocus] = useState<number>();
   const [hovering, setHovering] = useState<number | null>(null);
-  const [items, setItems] = useState<string[]>([
-    "xqhgt",
-    "plfso",
-    "czqjp",
-    "kjvni",
-    "fwbtd",
-  ]);
 
   const { bg1, bg2, hover, text } = currentTheme;
 
-  const tabs = items.map((item, index) => {
+  const tabsMap = tabs.map((item, index) => {
     return (
       <li
         key={index}
         className={`${
           index == focus ? bg2 : bg1
-        } ${hover} flex h-4/5 w-40 cursor-pointer items-center justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
-        onClick={() => setFocus(index)}
+        } ${hover} flex h-4/5 w-40 cursor-pointer select-none items-center justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
+        onClick={() => {
+          setFocus(index);
+          setCurrentPage(item);
+        }}
         onMouseEnter={() => setHovering(index)}
         onMouseLeave={() => setHovering(null)}
       >
-        {item}
+        <p className={`w-4/5 truncate`}>{item}</p>
         {hovering == index && (
           <button
             className={``}
-            onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
+            onClick={() => setTabs(tabs.filter((e) => e !== item))}
           >
             X
           </button>
@@ -44,18 +38,20 @@ export default function Nav({
       </li>
     );
   });
+
   return (
     <nav
-      className={`${bg1} ${text} fixed inset-x-0 left-0 top-0 z-50 mb-10 flex h-10 items-center justify-between px-10`}
+      className={`${bg1} ${text} relative z-50 flex h-10 w-full items-center justify-between px-10`}
     >
       <ul className={`flex h-full items-end gap-px`}>
-        {tabs}
+        {tabsMap}
         <button
           className={`ml-5 self-center text-4xl`}
           onClick={() => {
-            items[items.length - 1] !== "" &&
-              setItems((e) => [...e, "New tab"]);
-            setFocus(items.length);
+            tabs[tabs.length - 1] !== "New tab" &&
+              setTabs([...tabs, "New tab"]);
+            setFocus(tabs.length);
+            setCurrentPage("New tab");
           }}
         >
           +
@@ -63,7 +59,7 @@ export default function Nav({
       </ul>
       <button
         className={`absolute right-0 h-full w-10 cursor-pointer bg-red-400`}
-        onClick={() => setSourceMode((e) => !e)}
+        onClick={() => setSourceMode()}
       />
     </nav>
   );

@@ -12,7 +12,8 @@ export const themes: Record<
     text: string;
     border: string;
     hover: string;
-    scrollColor:string
+    scrollColor: string;
+    color1: string;
   }
 > = {
   theme1: {
@@ -24,7 +25,8 @@ export const themes: Record<
     text: "text-[#b3b3b3]",
     border: "border-[#b3b3b3]/50",
     hover: "hover:bg-[#b3b3b3]/10",
-    scrollColor:"scroll1"
+    scrollColor: "scroll1",
+    color1: "text-[#8a5cf5]",
   },
   theme2: {
     id: "theme2",
@@ -35,7 +37,8 @@ export const themes: Record<
     text: "text-[#5c5c5c]",
     border: "border-[#5c5c5c]/50",
     hover: "hover:bg-[#5c5c5c]/10",
-    scrollColor:"scroll2"
+    scrollColor: "scroll2",
+    color1: "text-[#8a5cf5]",
   },
   theme3: {
     id: "theme3",
@@ -46,7 +49,8 @@ export const themes: Record<
     text: "text-[#bec6cf]",
     border: "border-[#bec6cf]/50",
     hover: "hover:bg-[#bec6cf]/10",
-    scrollColor:"scroll3"
+    scrollColor: "scroll3",
+    color1: "text-[#8a5cf5]",
   },
 };
 
