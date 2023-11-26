@@ -15,6 +15,7 @@ export default function NewTab({
       <button
         className={`text-4xl`}
         onClick={() => {
+          titleRef.current && (titleRef.current.value = "");
           titleRef.current?.focus();
         }}
       >

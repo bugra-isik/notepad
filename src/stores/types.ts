@@ -20,4 +20,6 @@ export type editorType = {
   setCurrentPage: (e: string) => void;
   tabs: string[];
   setTabs: (e: string[]) => void;
+  content: string;
+  setContent: (e: string) => void;
 };

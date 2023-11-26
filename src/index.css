@@ -23,15 +23,75 @@
 }
 
 #frame h1 {
-  font-size: 4rem;
-  line-height: 4rem;
-  color: red;
+  font-size: 3rem;
+  color: #8a5cf5;
+  font-weight: bold;
 }
+
 #frame h2 {
-  font-size: 3rem;
-  color: green;
+  margin-top: 2rem;
+  font-size: 2.5rem;
+  font-weight: bold;
 }
+
 #frame h3 {
-  font-size: 3rem;
-  color: blue;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#frame h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#frame h5 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#frame h6 {
+  font-size: 0.5rem;
+  font-weight: bold;
+}
+
+blockquote {
+  margin: 0;
+  padding: 10px 20px;
+  border-left: 0.5rem solid #ccc;
+  background-color: #f9f9f9;
+  quotes: "\\201C" "\\201D" "\\2018" "\\2019";
+}
+
+blockquote p {
+  font-style: italic;
+}
+
+blockquote footer {
+  margin-top: 10px;
+  text-align: right;
+  font-style: normal;
+  font-weight: bold;
+}
+
+/* frame id'sine sahip elementin içindeki sıralı listelerin görünümü */
+#frame ol {
+  /* Sıralı listelerin genel özellikleri */
+  margin-left: 20px; /* İstenilen iç boşluk */
+  padding-left: 20px; /* İstenilen iç boşluk */
+  list-style: decimal;
+}
+
+#frame ol ol {
+  /* İç içe sıralı listelerin özellikleri */
+  margin-left: 20px; /* İstenilen iç boşluk */
+  padding-left: 20px; /* İstenilen iç boşluk */
+}
+
+#frame ul {
+  list-style: circle; /* İşaretleri gizlemek */
+  padding-left: 20px; /* İstenilen iç boşluk */
+}
+#frame a {
+  color: #8a5cf5;
+  font-weight: bold;
 }
