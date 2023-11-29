@@ -1,9 +1,9 @@
 import { useStore } from "zustand";
-import { themeStore } from "../../stores/themeStore";
 import Nav from "./nav/nav";
 import Body from "./body/body";
 import { useRef } from "react";
 import Headline from "./headline/headline";
+import { themeStore } from "@/stores/themeStore";
 export default function Frame() {
   const { currentTheme } = useStore(themeStore);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -11,7 +11,6 @@ export default function Frame() {
 
   return (
     <section
-      id="frame"
       className={`${bg2} ${text} relative flex w-4/5 flex-col items-center drop-shadow-lg`}
     >
       <Nav />

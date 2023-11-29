@@ -1,6 +1,6 @@
+import { themeStore } from "@/stores/themeStore";
 import { RefObject } from "react";
 import { useStore } from "zustand";
-import { themeStore } from "../../../../stores/themeStore";
 
 export default function NewTab({
   titleRef,

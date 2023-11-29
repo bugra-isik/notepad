@@ -1,6 +1,6 @@
 import { useStore } from "zustand";
-import { themeStore } from "../../stores/themeStore";
 import Items from "./items";
+import { themeStore } from "@/stores/themeStore";
 
 export default function SideBar() {
   const { currentTheme } = useStore(themeStore);

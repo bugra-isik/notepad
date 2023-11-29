@@ -1,9 +1,9 @@
 import { RefObject, useEffect } from "react";
 import { useStore } from "zustand";
-import { editorStore } from "../../../stores/editorStore";
 import NewTab from "./newTab/newTab";
 import Textarea from "./textarea/textarea";
 import MarkdownArea from "./markdownArea/markdownArea";
+import { editorStore } from "@/stores/editorStore";
 
 export default function Body({
   titleRef,
@@ -30,6 +30,7 @@ export default function Body({
 
   return (
     <section
+      id="frame"
       className={`relative flex h-full w-4/5 flex-col items-center drop-shadow-lg`}
     >
       {currentPage == "New tab" ? (

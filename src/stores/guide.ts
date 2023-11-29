@@ -228,18 +228,29 @@ The rendered output looks like this:
 
 My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
 
+### URLs and Email Addresses
 
+To quickly turn a URL or email address into a link, enclose it in angle brackets.
 
+\`\`\`markdown
+<https://www.markdownguide.org>
+<fake@example.com>
+\`\`\`
 
+The rendered output looks like this:
 
+<https://www.markdownguide.org>\n
+<fake@example.com>
 
+## Escaping Characters
 
+To display a literal character that would otherwise be used to format text in a Markdown document, add a backslash (\\) in front of the character.
 
+\`\`\`markdown
+\\* Without the backslash, this would be a bullet in an unordered list.
+\`\`\`
 
+The rendered output looks like this:
 
-
-
-
-
-
+\\* Without the backslash, this would be a bullet in an unordered list.
 `;

@@ -1,8 +1,8 @@
 import { useStore } from "zustand";
-import { themeStore } from "../../stores/themeStore";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Theme from "./theme";
+import { themeStore } from "@/stores/themeStore";
 
 export default function Menu() {
   const { currentTheme } = useStore(themeStore);

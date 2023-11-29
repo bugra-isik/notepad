@@ -1,6 +1,6 @@
 import { useStore } from "zustand";
-import { themeStore } from "../../stores/themeStore";
 import { useEffect, useState } from "react";
+import { themeStore } from "@/stores/themeStore";
 
 export default function Theme() {
   const { currentTheme, setCurrentTheme } = useStore(themeStore);

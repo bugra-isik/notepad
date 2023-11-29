@@ -3,7 +3,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { stackoverflowDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
-import { editorStore } from "../../../../stores/editorStore";
+import { editorStore } from "@/stores/editorStore";
 
 export default function MarkdownArea() {
   const { content } = useStore(editorStore);

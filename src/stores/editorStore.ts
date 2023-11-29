@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { editorType } from "./types";
-import { guide } from "./guide";
+// import { guide } from "./guide";
 
 
 
@@ -11,7 +11,7 @@ const editorStore = create<editorType>()((set) => ({
   setCurrentPage: (e) => set(() => ({ currentPage: e })),
   tabs: ["xqhgt", "plfso"],
   setTabs: (e) => set(() => ({ tabs: e })),
-  content: guide,
+  content: "",
   setContent: (e) => set(() => ({ content: e })),
 }));
 
