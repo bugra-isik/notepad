@@ -1,8 +1,8 @@
 import { useStore } from "zustand";
-import { useCallback, useState } from "react";
 import { editorStore } from "@/stores/editorStore";
 import { themeStore } from "@/stores/themeStore";
-import db from "@/db";
+import { db } from "@/db";
+import { useCallback, useEffect } from "react";
 
 export default function Nav() {
   const { currentTheme } = useStore(themeStore);
@@ -12,70 +12,58 @@ export default function Nav() {
     setSourceMode,
     tabs,
     setTabs,
-    content,
     setContent,
   } = useStore(editorStore);
-
-  const [hoverIndex, setHoverIndex] = useState<number | null>();
-
   const { bg1, bg2, hover, text } = currentTheme;
 
-  const addData = useCallback(async () => {
-    try {
-      const existingRecord = await db.table("myData").get(currentPage);
-      if (existingRecord) {
-        console.log("Kayıt zaten var:", existingRecord);
-        await db.table("myData").add({
-          title: currentPage,
-          content: content,
-        });
-      } else {
-        // Kayıt yoksa, yeni kaydı ekleyin
-        await db.table("myData").add({
-          title: currentPage,
-          content: content,
-        });
-        console.log("Yeni kayıt eklendi!");
+  const getData = useCallback(
+    async (currentTab: string) => {
+      const data = await db.myData.get(currentTab);
+      if (data) {
+        setContent(data.content);
       }
-    } catch (error) {
-      console.error("İşlem sırasında hata oluştu:", error);
-    }
-  }, [content, currentPage]);
+    },
+    [setContent],
+  );
 
-  const getContentFromDB = async (item: string) =>
-    await db
-      .table("myData")
-      .get(item)
-      .then((e) => setContent(e.content));
+  useEffect(() => {
+    setCurrentPage(tabs[0]);
+    getData(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const TabList = () =>
     tabs.map((item, index) => {
       const isCurrentPage = item === currentPage;
-      const handleClick = () => {
-        setCurrentPage(item);
-        getContentFromDB(item);
-      };
       return (
         <li
           key={index}
           className={`${
             isCurrentPage ? bg2 : bg1
           } ${hover} flex h-4/5 w-40 cursor-pointer select-none items-center justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
-          onClick={handleClick}
-          // onMouseEnter={() => setHoverIndex(index)}
-          // onMouseLeave={() => setHoverIndex(null)}
+          onClick={() => {
+            setCurrentPage(item);
+            getData(item);
+          }}
+          onMouseEnter={(e) =>
+            e.currentTarget.children[1].classList.remove("hidden")
+          }
+          onMouseLeave={(e) =>
+            e.currentTarget.children[1].classList.add("hidden")
+          }
         >
           <p className={`w-4/5 truncate`}>{item}</p>
-          {/* <button
-            hidden={!(hoverIndex == index)}
+          <button
+            className={`hidden`}
             onClick={(e) => {
               e.stopPropagation();
               setCurrentPage(index === 0 ? tabs[1] : tabs[index - 1]);
               setTabs(tabs.filter((e) => e !== item));
+              getData(index === 0 ? tabs[1] : tabs[index - 1]);
             }}
           >
             X
-          </button> */}
+          </button>
         </li>
       );
     });
@@ -102,7 +90,6 @@ export default function Nav() {
       </ul>
       <button
         className={`absolute right-20 h-full w-10 cursor-pointer bg-blue-400`}
-        onClick={() => addData()}
       />
       <button
         className={`absolute right-0 h-full w-10 cursor-pointer bg-red-400`}

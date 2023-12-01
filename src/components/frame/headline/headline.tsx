@@ -1,5 +1,5 @@
 import { useStore } from "zustand";
-import { RefObject, useEffect } from "react";
+import { RefObject} from "react";
 import { editorStore } from "@/stores/editorStore";
 
 export default function Headline({
@@ -7,14 +7,7 @@ export default function Headline({
 }: {
   titleRef: RefObject<HTMLInputElement>;
 }) {
-  const { currentPage, setCurrentPage, tabs, setTabs } = useStore(editorStore);
-
-  useEffect(() => {
-    if (tabs.length == 0) {
-      setTabs(["Guide"]);
-      setCurrentPage("Guide");
-    }
-  }, [setTabs, tabs.length, setCurrentPage]);
+  const { currentPage, setCurrentPage, tabs, setTabs } = useStore(editorStore); 
 
   return (
     <section className={`flex w-full justify-center py-3`}>

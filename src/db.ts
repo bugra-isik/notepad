@@ -1,8 +1,19 @@
-import Dexie from "dexie";
+import Dexie, { Table } from "dexie";
 
-const db = new Dexie("NotePad");
-db.version(1).stores({
-  myData: "title, content",
-});
+export type Data = {
+  title: string;
+  content: string;
+};
 
-export default db;
+export class MySubClassedDexie extends Dexie {
+  myData!: Table<Data>;
+
+  constructor() {
+    super("myDatabase");
+    this.version(1).stores({
+      myData: "title, content",
+    });
+  }
+}
+
+export const db = new MySubClassedDexie();

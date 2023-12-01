@@ -1,8 +1,5 @@
 import { create } from "zustand";
 import { editorType } from "./types";
-// import { guide } from "./guide";
-
-
 
 const editorStore = create<editorType>()((set) => ({
   sourceMode: false,
