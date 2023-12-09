@@ -95,12 +95,7 @@ export default function Items() {
       <div className={`grid grid-cols-1`}>
         <ListItem />
       </div>
-      <button
-        className={`${currentTheme.hover} flex h-20 w-full items-center rounded text-start text-lg transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
-        onClick={() => setItems((e) => [...e, " "])}
-      >
-        Add new
-      </button>
+      
     </>
   );
 }

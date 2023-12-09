@@ -17,20 +17,55 @@ export default function Nav() {
   const { bg1, bg2, hover, text } = currentTheme;
 
   const getData = useCallback(
-    async (currentTab: string) => {
-      const data = await db.myData.get(currentTab);
-      if (data) {
-        setContent(data.content);
-      }
-    },
-    [setContent],
+    async (currentTab: string) =>
+      tabs.length !== 0 &&
+      (await db.myData
+        .get(currentTab)
+        .then((e) => setContent(e?.content ?? ""))
+        .catch((e) => console.log(e))),
+    [setContent, tabs.length],
   );
 
   useEffect(() => {
     setCurrentPage(tabs[0]);
-    getData(currentPage);
+    tabs.length !== 0 && getData(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      await db.myData
+        .get(tabs[0])
+        .then((e) => setContent(e?.content ?? ""))
+        .catch((e) => console.error("Error" + e));
+    };
+    tabs.length !== 0 && getData();
+  }, [tabs, setContent]);
+
+  useEffect(() => {
+    const getTabs = async () => {
+      await db.myData.get("Tabs Array").then((e) => {
+        if (e?.tabs?.length !== 0) {
+          setTabs(e?.tabs ?? []);
+          e?.tabs && setCurrentPage(e?.tabs[0]);
+        }
+      });
+    };
+    getTabs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const putTabs = async () => {
+      await db.myData.put({
+        title: "Tabs Array",
+        tabs: tabs,
+      });
+    };
+    putTabs();
+  }, [tabs]);
+
+  
 
   const TabList = () =>
     tabs.map((item, index) => {
@@ -43,7 +78,7 @@ export default function Nav() {
           } ${hover} flex h-4/5 w-40 cursor-pointer select-none items-center justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
           onClick={() => {
             setCurrentPage(item);
-            getData(item);
+            tabs.length !== 0 && getData(item);
           }}
           onMouseEnter={(e) =>
             e.currentTarget.children[1].classList.remove("hidden")
@@ -57,9 +92,12 @@ export default function Nav() {
             className={`hidden`}
             onClick={(e) => {
               e.stopPropagation();
+              setContent("");
               setCurrentPage(index === 0 ? tabs[1] : tabs[index - 1]);
               setTabs(tabs.filter((e) => e !== item));
-              getData(index === 0 ? tabs[1] : tabs[index - 1]);
+              if (tabs.length > 1) {
+                getData(index === 0 ? tabs[1] : tabs[index - 1]);
+              }
             }}
           >
             X

@@ -6,7 +6,7 @@ const editorStore = create<editorType>()((set) => ({
   setSourceMode: () => set((e) => ({ sourceMode: !e.sourceMode })),
   currentPage: "",
   setCurrentPage: (e) => set(() => ({ currentPage: e })),
-  tabs: ["xqhgt", "plfso"],
+  tabs: [],
   setTabs: (e) => set(() => ({ tabs: e })),
   content: "",
   setContent: (e) => set(() => ({ content: e })),

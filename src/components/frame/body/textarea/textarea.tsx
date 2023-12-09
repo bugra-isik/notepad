@@ -9,9 +9,12 @@ export default function Textarea() {
 
   useEffect(() => {
     const getData = async (currentTab: string) => {
-      await db.myData.get(currentTab).then((e) => {
-        e && setContent(e.content);
-      });
+      await db.myData
+        .get(currentTab)
+        .then((e) => {
+          e && setContent(e.content);
+        })
+        .catch((e) => console.log(e));
     };
     getData(currentPage);
   }, [currentPage, setContent]);
@@ -22,7 +25,7 @@ export default function Textarea() {
       content: content,
     });
   };
-
+  console.log(content);
   return (
     <motion.textarea
       initial={{ opacity: 0 }}

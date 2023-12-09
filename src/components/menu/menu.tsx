@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Theme from "./theme";
 import { themeStore } from "@/stores/themeStore";
+import { db } from "@/db";
 
 export default function Menu() {
   const { currentTheme } = useStore(themeStore);
@@ -23,12 +24,14 @@ export default function Menu() {
     }
   }, [translateX, width]);
 
+  const deleteTable = async () => await db.myData.clear();
+
   return (
     <section
       className={`${translateX} absolute inset-y-0 right-0 z-50 flex w-1/5 items-center bg-black/75 backdrop-blur transition duration-500 ease-out`}
     >
       <button
-        className={`absolute -left-5 h-40 w-5 rounded-l-lg bg-[#8a5cf5] drop-shadow-2xl backdrop-blur`}
+        className={`bg-main-color absolute -left-5 h-40 w-5 rounded-l-lg drop-shadow-2xl backdrop-blur`}
         onClick={() =>
           setTranslateX((e) =>
             e == "translate-x-full" ? "translate-x-0" : "translate-x-full",
@@ -36,6 +39,12 @@ export default function Menu() {
         }
       />
       <Theme />
+      <button
+        className={`bg-red-900 h-20 w-40`}
+        onClick={() => deleteTable()}
+      >
+        Delete All Data
+      </button>
     </section>
   );
 }
