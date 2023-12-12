@@ -1,27 +1,23 @@
 import { useStore } from "zustand";
 import { useState } from "react";
 import { themeStore } from "@/stores/themeStore";
+import { editorStore } from "@/stores/editorStore";
 
 export default function Items() {
   const { currentTheme } = useStore(themeStore);
-  const [currentItem, setCurrentItem] = useState<string>("");
+  const { items } = useStore(editorStore);
+
+  // const [currentItem, setCurrentItem] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [toggle, setToggle] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>("");
-  const [items, setItems] = useState<string[]>([
-    "xqhgt",
-    "plfso",
-    "czqjp",
-    "kjvni",
-    "fwbtd",
-  ]);
 
   const ListItem = () =>
     items.map((item, index) => (
       <div
         key={index}
         className={`${currentTheme.hover} flex h-20 items-center justify-between rounded px-4 text-start text-lg transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
-        onClick={() => setCurrentItem(item)}
+        // onClick={() => setCurrentItem(item)}
       >
         {toggle ? (
           <>
@@ -38,7 +34,7 @@ export default function Items() {
             </button>
             <button
               className={`basis-1/4`}
-              onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
+              // onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
             >
               X
             </button>
@@ -57,7 +53,7 @@ export default function Items() {
                   updatedItems[currentIndex] = inputValue;
                   setToggle(true);
                 }
-                updatedItems[index] !== undefined && setItems(updatedItems);
+                // updatedItems[index] !== undefined && setItems(updatedItems);
               }}
             >
               &#x2713;
@@ -81,7 +77,7 @@ export default function Items() {
             </button>
             <button
               className={`basis-1/4`}
-              onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
+              // onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
             >
               X
             </button>
@@ -95,7 +91,6 @@ export default function Items() {
       <div className={`grid grid-cols-1`}>
         <ListItem />
       </div>
-      
     </>
   );
 }

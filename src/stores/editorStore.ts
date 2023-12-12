@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { editorType } from "./types";
+import { EditorType } from "./types";
 
-const editorStore = create<editorType>()((set) => ({
+const editorStore = create<EditorType>()((set) => ({
   sourceMode: false,
   setSourceMode: () => set((e) => ({ sourceMode: !e.sourceMode })),
   currentPage: "",
@@ -10,6 +10,8 @@ const editorStore = create<editorType>()((set) => ({
   setTabs: (e) => set(() => ({ tabs: e })),
   content: "",
   setContent: (e) => set(() => ({ content: e })),
+  items: [],
+  setItems: (e) => set((x) => ({ items: [...x.items, e] })),
 }));
 
 export { editorStore };

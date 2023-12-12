@@ -1,4 +1,4 @@
-import { themeType } from "./types";
+import { ThemeType } from "./types";
 import { create } from "zustand";
 
 export const themes: Record<
@@ -54,7 +54,7 @@ export const themes: Record<
   },
 };
 
-const themeStore = create<themeType>()((set) => ({
+const themeStore = create<ThemeType>()((set) => ({
   currentTheme: themes.theme1,
   setCurrentTheme: (e) => set(() => ({ currentTheme: themes[e] })),
 }));

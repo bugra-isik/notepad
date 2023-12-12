@@ -3,6 +3,8 @@ import { editorStore } from "@/stores/editorStore";
 import { themeStore } from "@/stores/themeStore";
 import { db } from "@/db";
 import { useCallback, useEffect } from "react";
+import { VscAdd } from "react-icons/vsc";
+import { VscClose } from "react-icons/vsc";
 
 export default function Nav() {
   const { currentTheme } = useStore(themeStore);
@@ -65,8 +67,6 @@ export default function Nav() {
     putTabs();
   }, [tabs]);
 
-  
-
   const TabList = () =>
     tabs.map((item, index) => {
       const isCurrentPage = item === currentPage;
@@ -75,7 +75,7 @@ export default function Nav() {
           key={index}
           className={`${
             isCurrentPage ? bg2 : bg1
-          } ${hover} flex h-4/5 w-40 cursor-pointer select-none items-center justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
+          } ${hover} flex h-4/5 w-40 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
           onClick={() => {
             setCurrentPage(item);
             tabs.length !== 0 && getData(item);
@@ -89,7 +89,7 @@ export default function Nav() {
         >
           <p className={`w-4/5 truncate`}>{item}</p>
           <button
-            className={`hidden`}
+            className={`hidden text-xl`}
             onClick={(e) => {
               e.stopPropagation();
               setContent("");
@@ -100,7 +100,7 @@ export default function Nav() {
               }
             }}
           >
-            X
+            <VscClose />
           </button>
         </li>
       );
@@ -112,19 +112,17 @@ export default function Nav() {
     >
       <ul className={`flex h-full items-end gap-px`}>
         <TabList />
-        <li>
-          <button
-            className={`ml-5 self-center text-4xl`}
-            onClick={() => {
-              tabs[tabs.length - 1] !== "New tab" &&
-                setTabs([...tabs, "New tab"]);
-              setCurrentPage("New tab");
-              setContent("");
-            }}
-          >
-            +
-          </button>
-        </li>
+        <button
+          className={`ml-2 text-xl`}
+          onClick={() => {
+            tabs[tabs.length - 1] !== "New tab" &&
+              setTabs([...tabs, "New tab"]);
+            setCurrentPage("New tab");
+            setContent("");
+          }}
+        >
+          <VscAdd />
+        </button>
       </ul>
       <button
         className={`absolute right-20 h-full w-10 cursor-pointer bg-blue-400`}

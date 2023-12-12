@@ -1,4 +1,4 @@
-export type themeType = {
+export type ThemeType = {
   currentTheme: {
     id: string;
     bg0: string;
@@ -13,7 +13,7 @@ export type themeType = {
   };
   setCurrentTheme: (e: "theme1" | "theme2" | "theme3" | string) => void;
 };
-export type editorType = {
+export type EditorType = {
   sourceMode: boolean;
   setSourceMode: () => void;
   currentPage: string;
@@ -22,4 +22,10 @@ export type editorType = {
   setTabs: (e: string[]) => void;
   content: string;
   setContent: (e: string) => void;
+  items: string[];
+  setItems: (e: string) => void;
+};
+export type Utility = {
+  isModalOpen: boolean;
+  setIsModalOpen: () => void;
 };
