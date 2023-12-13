@@ -16,7 +16,7 @@ export default function MarkdownArea() {
       className={`h-full w-4/5 overflow-y-scroll pr-10`}
     >
       <Markdown
-        className={`markdown flex flex-col pb-80 pt-20`}
+        className={`markdown flex flex-col pb-80`}
         children={content}
         components={{
           code(props) {

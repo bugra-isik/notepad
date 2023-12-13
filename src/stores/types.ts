@@ -13,6 +13,7 @@ export type ThemeType = {
   };
   setCurrentTheme: (e: "theme1" | "theme2" | "theme3" | string) => void;
 };
+
 export type EditorType = {
   sourceMode: boolean;
   setSourceMode: () => void;
@@ -23,9 +24,12 @@ export type EditorType = {
   content: string;
   setContent: (e: string) => void;
   items: string[];
-  setItems: (e: string) => void;
+  setItems: (e: string[]) => void;
 };
+
 export type Utility = {
-  isModalOpen: boolean;
-  setIsModalOpen: () => void;
+  createModal: boolean;
+  setCreateModal: () => void;
+  editModal: boolean;
+  setEditModal: () => void;
 };

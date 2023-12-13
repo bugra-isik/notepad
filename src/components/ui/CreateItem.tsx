@@ -1,3 +1,4 @@
+import { db } from "@/db";
 import { editorStore } from "@/stores/editorStore";
 import { themeStore } from "@/stores/themeStore";
 import { utilityStore } from "@/stores/utiltyStore";
@@ -5,12 +6,18 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useStore } from "zustand";
 
-export default function Modal() {
-  const { setIsModalOpen } = useStore(utilityStore);
+export default function CreateItem() {
+  const { setCreateModal } = useStore(utilityStore);
   const { currentTheme } = useStore(themeStore);
-  const { setItems } = useStore(editorStore);
-
+  const { items, setItems } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
+
+  const addData = async (title: string) => {
+    await db.myData.put({
+      title: title,
+      content: "",
+    });
+  };
 
   return (
     <motion.div
@@ -19,11 +26,11 @@ export default function Modal() {
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
       className={`absolute inset-0 z-[999] grid place-items-center bg-black/75`}
       onClick={() => {
-        setIsModalOpen();
+        setCreateModal();
       }}
     >
       <div
-        className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-evenly rounded px-16 text-xl`}
+        className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-evenly rounded-3xl px-16 text-xl`}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -32,7 +39,8 @@ export default function Modal() {
         <input
           ref={ref}
           type="text"
-          className={`${currentTheme.bg1} h-1/4 px-4 w-full outline-none`}
+          autoFocus
+          className={`${currentTheme.bg2} ${currentTheme.hover} h-1/4 w-full rounded px-4 outline-none transition`}
         />
         <div className={`flex w-full items-center justify-between`}>
           <button
@@ -40,8 +48,9 @@ export default function Modal() {
             onClick={(e) => {
               e.stopPropagation();
               if (ref.current && ref.current.value !== "") {
-                setItems(ref.current.value);
-                setIsModalOpen();
+                setItems([...items, ref.current.value]);
+                addData(ref.current.value);
+                setCreateModal();
               }
             }}
           >
@@ -50,7 +59,7 @@ export default function Modal() {
           <button
             className={`${currentTheme.hover} rounded px-2 py-1`}
             onClick={() => {
-              setIsModalOpen();
+              setCreateModal();
             }}
           >
             Cancel

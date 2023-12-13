@@ -1,96 +1,69 @@
 import { useStore } from "zustand";
-import { useState } from "react";
+import { useEffect } from "react";
 import { themeStore } from "@/stores/themeStore";
 import { editorStore } from "@/stores/editorStore";
+import { VscEdit } from "react-icons/vsc";
+import { db } from "@/db";
+import { utilityStore } from "@/stores/utiltyStore";
 
 export default function Items() {
   const { currentTheme } = useStore(themeStore);
-  const { items } = useStore(editorStore);
-
+  const { items, setItems } = useStore(editorStore);
+  const { setEditModal } = useStore(utilityStore);
   // const [currentItem, setCurrentItem] = useState<string>("");
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [toggle, setToggle] = useState<boolean>(true);
-  const [inputValue, setInputValue] = useState<string>("");
+  // const [currentIndex, setCurrentIndex] = useState<number>(0);
+  // const [toggle, setToggle] = useState<boolean>(true);
+  // const [inputValue, setInputValue] = useState<string>("");
+  // const editRef=useRef(null)
+
+  const { hover, bg2 } = currentTheme;
+
+  useEffect(() => {
+    const getItems = async () => {
+      await db.myData.get("Items Array").then((e) => {
+        if (e?.tabs?.length !== 0 && e?.items) {
+          //setItems(e?.items[0]);
+          // e?.tabs && setCurrentPage(e?.tabs[0]);
+        }
+      });
+    };
+    getItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const putItems = async () => {
+      await db.myData.put({
+        title: "Items Array",
+        items: items,
+      });
+    };
+    putItems();
+  }, [items]);
 
   const ListItem = () =>
     items.map((item, index) => (
-      <div
+      <button
         key={index}
-        className={`${currentTheme.hover} flex h-20 items-center justify-between rounded px-4 text-start text-lg transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
+        className={`${hover} ${bg2} flex h-20 items-center justify-between rounded px-4 text-start text-lg drop-shadow transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
         // onClick={() => setCurrentItem(item)}
+        onMouseEnter={(e) =>
+          e.currentTarget.children[1].classList.remove("hidden")
+        }
+        onMouseLeave={(e) =>
+          e.currentTarget.children[1].classList.add("hidden")
+        }
       >
-        {toggle ? (
-          <>
-            <p className={`truncate`}>{item}</p>
-            <button
-              className={`basis-1/4 text-xs`}
-              onClick={() => {
-                setToggle(false);
-                setCurrentIndex(index);
-                setInputValue("");
-              }}
-            >
-              edit
-            </button>
-            <button
-              className={`basis-1/4`}
-              // onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
-            >
-              X
-            </button>
-          </>
-        ) : currentIndex == index ? (
-          <>
-            <input
-              className={`flex w-3/4 resize-none items-center bg-transparent focus:outline-none`}
-              onChange={(e) => setInputValue(e.currentTarget.value)}
-            />
-            <button
-              className={`basis-1/4`}
-              onClick={() => {
-                const updatedItems = [...items];
-                if (inputValue !== "") {
-                  updatedItems[currentIndex] = inputValue;
-                  setToggle(true);
-                }
-                // updatedItems[index] !== undefined && setItems(updatedItems);
-              }}
-            >
-              &#x2713;
-            </button>
-            <button className={`basis-1/4`} onClick={() => setToggle(true)}>
-              X
-            </button>
-          </>
-        ) : (
-          <>
-            <p className={`truncate`}>{item}</p>
-            <button
-              className={`basis-1/4 text-xs`}
-              onClick={() => {
-                setToggle(false);
-                setCurrentIndex(index);
-                setInputValue("");
-              }}
-            >
-              edit
-            </button>
-            <button
-              className={`basis-1/4`}
-              // onClick={() => setItems((e) => e.filter((_, i) => i !== index))}
-            >
-              X
-            </button>
-          </>
-        )}
-      </div>
+        <p>{item}</p>
+        <i className={`hidden text-xl`} onClick={() => setEditModal()}>
+          <VscEdit />
+        </i>
+      </button>
     ));
 
   return (
-    <>
-      <div className={`grid grid-cols-1`}>
-        <ListItem />
-      </div>
-    </>
+    <div className={`mb-4 grid grid-cols-1 gap-y-4`}>
+      <ListItem />
+    </div>
   );
 }

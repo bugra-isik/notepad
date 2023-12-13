@@ -108,7 +108,7 @@ export default function Nav() {
 
   return (
     <nav
-      className={`${bg1} ${text} relative z-50 flex h-10 w-full items-center justify-between px-10`}
+      className={`${bg1} ${text}  relative z-50 flex h-10 w-full items-center justify-between px-10`}
     >
       <ul className={`flex h-full items-end gap-px`}>
         <TabList />

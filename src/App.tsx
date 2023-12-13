@@ -3,13 +3,15 @@ import { themeStore } from "./stores/themeStore";
 import Frame from "./components/frame/frame";
 import Menu from "./components/menu/menu";
 import Explorer from "./components/explorer/explorer";
-import Modal from "./components/ui/modal";
+
 import { utilityStore } from "./stores/utiltyStore";
 import { AnimatePresence } from "framer-motion";
+import CreateItem from "./components/ui/CreateItem";
+import EditItem from "./components/ui/EditItem";
 
 export default function App() {
   const { currentTheme } = useStore(themeStore);
-  const { isModalOpen } = useStore(utilityStore);
+  const { createModal,editModal } = useStore(utilityStore);
 
   const { bg0, scrollColor } = currentTheme;
 
@@ -24,7 +26,8 @@ export default function App() {
         <Frame />
       </div>
       <Menu />
-      <AnimatePresence>{isModalOpen && <Modal />}</AnimatePresence>
+      <AnimatePresence>{createModal && <CreateItem />}</AnimatePresence>
+      <AnimatePresence>{editModal && <EditItem />}</AnimatePresence>
     </main>
   );
 }

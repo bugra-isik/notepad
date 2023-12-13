@@ -11,7 +11,7 @@ const editorStore = create<EditorType>()((set) => ({
   content: "",
   setContent: (e) => set(() => ({ content: e })),
   items: [],
-  setItems: (e) => set((x) => ({ items: [...x.items, e] })),
+  setItems: (e) => set(() => ({ items: e })),
 }));
 
 export { editorStore };

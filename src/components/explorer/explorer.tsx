@@ -7,7 +7,7 @@ import { utilityStore } from "@/stores/utiltyStore";
 
 export default function Explorer() {
   const { currentTheme } = useStore(themeStore);
-  const { setIsModalOpen } = useStore(utilityStore);
+  const { setCreateModal } = useStore(utilityStore);
 
   return (
     <section
@@ -16,7 +16,7 @@ export default function Explorer() {
       <Items />
       <button
         className={`${currentTheme.hover} flex h-20 w-full items-center justify-center rounded text-start text-5xl transition`}
-        onClick={() => setIsModalOpen()}
+        onClick={() => setCreateModal()}
       >
         <VscAdd />
       </button>

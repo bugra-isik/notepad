@@ -1,11 +1,13 @@
 import { db } from "@/db";
 import { editorStore } from "@/stores/editorStore";
+import { themeStore } from "@/stores/themeStore";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useStore } from "zustand";
 
 export default function Textarea() {
   const { content, setContent, currentPage } = useStore(editorStore);
+  const { currentTheme} = useStore(themeStore);
 
   useEffect(() => {
     const getData = async (currentTab: string) => {
@@ -25,7 +27,7 @@ export default function Textarea() {
       content: content,
     });
   };
-  console.log(content);
+
   return (
     <motion.textarea
       initial={{ opacity: 0 }}
@@ -33,7 +35,7 @@ export default function Textarea() {
       transition={{ duration: 0.5 }}
       id="content"
       value={content}
-      className={`flex h-full w-4/5 resize-none whitespace-pre-wrap bg-transparent pb-80 pr-10 pt-20 focus:outline-none`}
+      className={`${currentTheme.bg1} flex h-full w-4/5 resize-none whitespace-pre-wrap pb-80 pr-10 pt-20 focus:outline-none`}
       onChange={(e) => {
         setContent(e.currentTarget.value);
         addData(e.currentTarget.value);
