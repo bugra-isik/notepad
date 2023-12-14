@@ -11,7 +11,7 @@ export default function Explorer() {
 
   return (
     <section
-      className={`${currentTheme.bg1} ${currentTheme.text} w-1/5 overflow-y-scroll p-4 drop-shadow-lg`}
+      className={`${currentTheme.bg1} ${currentTheme.text} w-1/5 overflow-y-scroll px-4 py-10 drop-shadow-lg`}
     >
       <Items />
       <button

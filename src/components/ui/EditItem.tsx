@@ -9,12 +9,15 @@ import { useStore } from "zustand";
 export default function EditItem() {
   const { setEditModal } = useStore(utilityStore);
   const { currentTheme } = useStore(themeStore);
-  const { items, setItems } = useStore(editorStore);
+  const { items, setItems, currentItem } = useStore(editorStore);
   const [toggle, setToggle] = useState<number>(1);
   const ref = useRef<HTMLInputElement>(null);
 
   const renameData = async (title: string) => {
-    await db.myData.update("de", { title: title, content: "" });
+    await db.myData.update(currentItem, { title: title, content: "" });
+  };
+  const deleteData = async (title: string) => {
+    await db.myData.delete(title);
   };
 
   const CurrentToggle = ({ value }: { value: number }) => {
@@ -27,15 +30,11 @@ export default function EditItem() {
               e.stopPropagation();
             }}
           >
-            <div className={`flex`}>
-              <button
-                className={`text-center text-red-500`}
-                onClick={() => setToggle(1)}
-              >
+            <div className={`grid w-2/3 grid-cols-2 place-items-center gap-4`}>
+              <button className={`font-black`} onClick={() => setToggle(1)}>
                 Rename
               </button>
-              <h1 className={`text-center`}>/</h1>
-              <button className={`text-center`} onClick={() => setToggle(2)}>
+              <button className={`font-thin`} onClick={() => setToggle(2)}>
                 Delete
               </button>
             </div>
@@ -51,8 +50,16 @@ export default function EditItem() {
                 onClick={(e) => {
                   e.stopPropagation();
                   if (ref.current && ref.current.value !== "") {
-                    renameData(ref.current.value);
+                    setItems(
+                      items.map((item) => {
+                        if (item === currentItem && ref.current) {
+                          return ref.current.value;
+                        }
+                        return item;
+                      }),
+                    );
                     setEditModal();
+                    renameData(ref.current.value);
                   }
                 }}
               >
@@ -78,29 +85,22 @@ export default function EditItem() {
               e.stopPropagation();
             }}
           >
-            <div className={`flex`}>
-              <button className={`text-center`} onClick={() => setToggle(1)}>
+            <div className={`grid w-2/3 grid-cols-2 place-items-center gap-4`}>
+              <button className={`font-thin`} onClick={() => setToggle(1)}>
                 Rename
               </button>
-              <h1 className={`text-center`}>/</h1>
-              <button
-                className={`text-center text-red-500`}
-                onClick={() => setToggle(2)}
-              >
+              <button className={`font-black`} onClick={() => setToggle(2)}>
                 Delete
               </button>
             </div>
             <div className={`flex w-full items-center justify-between`}>
               <button
                 className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
-                // onClick={(e) => {
-                //   e.stopPropagation();
-                //   if (ref.current && ref.current.value !== "") {
-                //     setItems([...items, ref.current.value]);
-                //     addData(ref.current.value);
-                //     setCreateModal();
-                //   }
-                // }}
+                onClick={() => {
+                  deleteData(currentItem);
+                  setItems(items.filter((e) => e !== currentItem));
+                  setEditModal();
+                }}
               >
                 Delete
               </button>

@@ -1,5 +1,5 @@
 import { useStore } from "zustand";
-import { RefObject} from "react";
+import { RefObject } from "react";
 import { editorStore } from "@/stores/editorStore";
 
 export default function Headline({
@@ -7,7 +7,7 @@ export default function Headline({
 }: {
   titleRef: RefObject<HTMLInputElement>;
 }) {
-  const { currentPage, setCurrentPage, tabs, setTabs } = useStore(editorStore); 
+  const { currentPage, setCurrentPage, tabs, setTabs } = useStore(editorStore);
 
   return (
     <section className={`flex w-full justify-center py-3`}>
@@ -17,7 +17,7 @@ export default function Headline({
         <input
           ref={titleRef}
           placeholder="New tab"
-          value={currentPage == "New tab" ? "" : currentPage}
+          value={"about:blank"}
           onChange={(e) => {
             setCurrentPage(e.target.value);
             const t = tabs;

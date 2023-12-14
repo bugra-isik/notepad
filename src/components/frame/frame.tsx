@@ -11,7 +11,7 @@ export default function Frame() {
 
   return (
     <section
-      className={`${bg2} ${text} relative flex w-4/5 flex-col items-center drop-shadow-lg`}
+      className={`${bg2} ${text} relative flex w-4/5 flex-col items-center`}
     >
       <Nav />
       <Headline titleRef={titleRef} />

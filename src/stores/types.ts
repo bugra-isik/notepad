@@ -24,7 +24,9 @@ export type EditorType = {
   content: string;
   setContent: (e: string) => void;
   items: string[];
-  setItems: (e: string[]) => void;
+  setItems: (e: string[]|undefined) => void;
+  currentItem: string;
+  setCurrentItem: (e: string) => void;
 };
 
 export type Utility = {

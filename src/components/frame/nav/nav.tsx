@@ -112,7 +112,7 @@ export default function Nav() {
     >
       <ul className={`flex h-full items-end gap-px`}>
         <TabList />
-        <button
+        {/* <button
           className={`ml-2 text-xl`}
           onClick={() => {
             tabs[tabs.length - 1] !== "New tab" &&
@@ -122,7 +122,7 @@ export default function Nav() {
           }}
         >
           <VscAdd />
-        </button>
+        </button> */}
       </ul>
       <button
         className={`absolute right-20 h-full w-10 cursor-pointer bg-blue-400`}

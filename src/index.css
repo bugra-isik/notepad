@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 * {
-  scrollbar-width: thin;
+  scrollbar-width: none !important;
 }
 
 @layer components {

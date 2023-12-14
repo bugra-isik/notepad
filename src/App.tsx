@@ -20,7 +20,7 @@ export default function App() {
       className={`${bg0} ${scrollColor} relative flex h-screen w-screen min-w-full overflow-hidden p-4 pr-8 text-white transition`}
     >
       <div
-        className={`z-10 flex w-full gap-4 overflow-hidden rounded-lg drop-shadow-2xl`}
+        className={`z-10 flex w-full overflow-hidden rounded-lg`}
       >
         <Explorer />
         <Frame />

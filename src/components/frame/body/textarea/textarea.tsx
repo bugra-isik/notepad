@@ -8,7 +8,7 @@ import { useStore } from "zustand";
 export default function Textarea() {
   const { content, setContent, currentPage } = useStore(editorStore);
   const { currentTheme} = useStore(themeStore);
-
+ 
   useEffect(() => {
     const getData = async (currentTab: string) => {
       await db.myData

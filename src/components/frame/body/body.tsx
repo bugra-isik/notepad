@@ -33,7 +33,7 @@ export default function Body({
       id="frame"
       className={`relative flex h-full w-4/5 flex-col items-center drop-shadow-lg`}
     >
-      {currentPage == "New tab" ? (
+      {currentPage == undefined ? (
         <NewTab titleRef={titleRef} />
       ) : sourceMode ? (
         <Textarea />

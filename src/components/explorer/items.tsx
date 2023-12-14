@@ -2,13 +2,14 @@ import { useStore } from "zustand";
 import { useEffect } from "react";
 import { themeStore } from "@/stores/themeStore";
 import { editorStore } from "@/stores/editorStore";
-import { VscEdit } from "react-icons/vsc";
+import { VscCircleLarge, VscEdit } from "react-icons/vsc";
 import { db } from "@/db";
 import { utilityStore } from "@/stores/utiltyStore";
 
 export default function Items() {
   const { currentTheme } = useStore(themeStore);
-  const { items, setItems } = useStore(editorStore);
+  const { items, setItems, setCurrentItem, tabs, setTabs, setCurrentPage } =
+    useStore(editorStore);
   const { setEditModal } = useStore(utilityStore);
   // const [currentItem, setCurrentItem] = useState<string>("");
   // const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -21,15 +22,13 @@ export default function Items() {
   useEffect(() => {
     const getItems = async () => {
       await db.myData.get("Items Array").then((e) => {
-        if (e?.tabs?.length !== 0 && e?.items) {
-          //setItems(e?.items[0]);
-          // e?.tabs && setCurrentPage(e?.tabs[0]);
+        if (e?.items?.length && e.items.length > 0) {
+          setItems(e?.items);
         }
       });
     };
     getItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setItems]);
 
   useEffect(() => {
     const putItems = async () => {
@@ -45,8 +44,12 @@ export default function Items() {
     items.map((item, index) => (
       <button
         key={index}
-        className={`${hover} ${bg2} flex h-20 items-center justify-between rounded px-4 text-start text-lg drop-shadow transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
-        // onClick={() => setCurrentItem(item)}
+        className={`${hover} ${bg2} flex h-20 items-center justify-between rounded px-4 text-start text-lg drop-shadow-lg transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
+        onClick={() => {
+          setCurrentItem(item);
+          !tabs.includes(item) && setTabs([...tabs, item]);
+          setCurrentPage(item);
+        }}
         onMouseEnter={(e) =>
           e.currentTarget.children[1].classList.remove("hidden")
         }
@@ -55,7 +58,14 @@ export default function Items() {
         }
       >
         <p>{item}</p>
-        <i className={`hidden text-xl`} onClick={() => setEditModal()}>
+        <i
+          className={`hidden text-lg`}
+          onClick={(e) => {
+            setCurrentItem(item);
+            setEditModal();
+            e.stopPropagation();
+          }}
+        >
           <VscEdit />
         </i>
       </button>
