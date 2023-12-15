@@ -3,14 +3,14 @@ import { editorStore } from "@/stores/editorStore";
 import { themeStore } from "@/stores/themeStore";
 import { db } from "@/db";
 import { useCallback, useEffect } from "react";
-import { VscAdd } from "react-icons/vsc";
-import { VscClose } from "react-icons/vsc";
+import { VscClose, VscBook, VscEdit } from "react-icons/vsc";
 
 export default function Nav() {
   const { currentTheme } = useStore(themeStore);
   const {
     currentPage,
     setCurrentPage,
+    sourceMode,
     setSourceMode,
     tabs,
     setTabs,
@@ -75,7 +75,7 @@ export default function Nav() {
           key={index}
           className={`${
             isCurrentPage ? bg2 : bg1
-          } ${hover} flex h-4/5 w-40 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
+          } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
           onClick={() => {
             setCurrentPage(item);
             tabs.length !== 0 && getData(item);
@@ -107,30 +107,17 @@ export default function Nav() {
     });
 
   return (
-    <nav
-      className={`${bg1} ${text}  relative z-50 flex h-10 w-full items-center justify-between px-10`}
-    >
-      <ul className={`flex h-full items-end gap-px`}>
+    <nav className={`${bg1} ${text}  relative z-50 flex h-8 w-full items-end`}>
+      <button className={`px-8 py-1 text-2xl`} onClick={() => setSourceMode()}>
+        {sourceMode ? (
+          <VscBook title="Current mode: Edit, click to read" />
+        ) : (
+          <VscEdit title="Current mode: Read, click to edit" />
+        )}
+      </button>
+      <ul className={`flex h-full w-full  items-end gap-px overflow-x-scroll`}>
         <TabList />
-        {/* <button
-          className={`ml-2 text-xl`}
-          onClick={() => {
-            tabs[tabs.length - 1] !== "New tab" &&
-              setTabs([...tabs, "New tab"]);
-            setCurrentPage("New tab");
-            setContent("");
-          }}
-        >
-          <VscAdd />
-        </button> */}
       </ul>
-      <button
-        className={`absolute right-20 h-full w-10 cursor-pointer bg-blue-400`}
-      />
-      <button
-        className={`absolute right-0 h-full w-10 cursor-pointer bg-red-400`}
-        onClick={() => setSourceMode()}
-      />
     </nav>
   );
 }

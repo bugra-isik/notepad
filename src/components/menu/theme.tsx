@@ -1,9 +1,9 @@
 import { useStore } from "zustand";
-import { useEffect, useState } from "react";
+import { useEffect,} from "react";
 import { themeStore } from "@/stores/themeStore";
 
 export default function Theme() {
-  const { currentTheme, setCurrentTheme } = useStore(themeStore);
+  const { setCurrentTheme } = useStore(themeStore);
 
   useEffect(() => {
     const local = localStorage.getItem("notePadTheme");

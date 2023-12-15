@@ -7,26 +7,17 @@ export default function Headline({
 }: {
   titleRef: RefObject<HTMLInputElement>;
 }) {
-  const { currentPage, setCurrentPage, tabs, setTabs } = useStore(editorStore);
+  const { currentPage, tabs } = useStore(editorStore);
 
   return (
-    <section className={`flex w-full justify-center py-3`}>
-      {tabs.length == 0 ? (
-        <div />
-      ) : (
-        <input
-          ref={titleRef}
-          placeholder="New tab"
-          value={"about:blank"}
-          onChange={(e) => {
-            setCurrentPage(e.target.value);
-            const t = tabs;
-            t[tabs.length - 1] = e.target.value;
-            setTabs(t);
-          }}
-          className={`bg-transparent focus:outline-none`}
-        />
-      )}
+    <section className={`flex w-4/5 justify-center py-3`}>
+      <div
+        ref={titleRef}
+        placeholder="New tab"
+        className={`bg-transparent text-center focus:outline-none`}
+      >
+        {tabs.length == 0 ? "about:blank" : currentPage}
+      </div>
     </section>
   );
 }

@@ -9,7 +9,7 @@ import { useStore } from "zustand";
 export default function CreateItem() {
   const { setCreateModal } = useStore(utilityStore);
   const { currentTheme } = useStore(themeStore);
-  const { items, setItems } = useStore(editorStore);
+  const { items, setItems, currentItem } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
 
   const addData = async (title: string) => {
@@ -29,7 +29,10 @@ export default function CreateItem() {
         setCreateModal();
       }}
     >
-      <div
+      <motion.div
+        // Vibration
+        // animate={{ translateX: [5, -5, 5, -5, 5, -5, 0] }}
+        // transition={{ ease: "linear", duration: 0.3 }}
         className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-evenly rounded-3xl px-16 text-xl`}
         onClick={(e) => {
           e.stopPropagation();
@@ -47,7 +50,11 @@ export default function CreateItem() {
             className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
             onClick={(e) => {
               e.stopPropagation();
-              if (ref.current && ref.current.value !== "") {
+              if (
+                ref.current &&
+                ref.current.value !== "" &&
+                !items.includes(ref.current.value)
+              ) {
                 setItems([...items, ref.current.value]);
                 addData(ref.current.value);
                 setCreateModal();
@@ -65,7 +72,7 @@ export default function CreateItem() {
             Cancel
           </button>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

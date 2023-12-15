@@ -6,6 +6,11 @@ export default {
       colors: {
         "main-color": "#8a5cf5",
       },
+      fontFamily: {
+        caveat: "'Caveat', cursive",
+        "dancing-script": "'Dancing Script', cursive",
+        roboto: "font-family: 'Roboto', sans-serif",
+      },
     },
   },
   plugins: [],

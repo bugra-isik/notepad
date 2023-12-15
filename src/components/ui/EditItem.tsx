@@ -9,7 +9,8 @@ import { useStore } from "zustand";
 export default function EditItem() {
   const { setEditModal } = useStore(utilityStore);
   const { currentTheme } = useStore(themeStore);
-  const { items, setItems, currentItem } = useStore(editorStore);
+  const { items, setItems, currentItem, tabs, setTabs, setCurrentPage } =
+    useStore(editorStore);
   const [toggle, setToggle] = useState<number>(1);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -49,7 +50,11 @@ export default function EditItem() {
                 className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (ref.current && ref.current.value !== "") {
+                  if (
+                    ref.current &&
+                    ref.current.value !== "" &&
+                    !items.includes(ref.current.value)
+                  ) {
                     setItems(
                       items.map((item) => {
                         if (item === currentItem && ref.current) {
@@ -58,6 +63,15 @@ export default function EditItem() {
                         return item;
                       }),
                     );
+                    setTabs(
+                      tabs.map((item) => {
+                        if (item === currentItem && ref.current) {
+                          return ref.current.value;
+                        }
+                        return item;
+                      }),
+                    );
+                    setCurrentPage(ref.current.value);
                     setEditModal();
                     renameData(ref.current.value);
                   }

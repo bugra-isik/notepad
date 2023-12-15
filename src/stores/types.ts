@@ -11,7 +11,9 @@ export type ThemeType = {
     scrollColor: string;
     color1: string;
   };
-  setCurrentTheme: (e: "theme1" | "theme2" | "theme3" | string) => void;
+  setCurrentTheme: (e: "theme1" | "theme2" | "theme3") => void;
+  fontFamily: string;
+  setFontFamily: (e: "roboto" | "caveat" | "script") => void;
 };
 
 export type EditorType = {
@@ -24,7 +26,7 @@ export type EditorType = {
   content: string;
   setContent: (e: string) => void;
   items: string[];
-  setItems: (e: string[]|undefined) => void;
+  setItems: (e: string[] | undefined) => void;
   currentItem: string;
   setCurrentItem: (e: string) => void;
 };

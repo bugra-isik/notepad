@@ -4,6 +4,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import Theme from "./theme";
 import { themeStore } from "@/stores/themeStore";
 import { db } from "@/db";
+import Fonts from "./Fonts";
 
 export default function Menu() {
   const { currentTheme } = useStore(themeStore);
@@ -28,10 +29,10 @@ export default function Menu() {
 
   return (
     <section
-      className={`${translateX} absolute inset-y-0 right-0 z-50 flex w-1/5 items-center bg-black/75 backdrop-blur transition duration-500 ease-out`}
+      className={`${translateX} absolute inset-y-0 right-0 z-50 flex w-1/5 flex-col items-center bg-black/75 backdrop-blur transition duration-500 ease-out`}
     >
       <button
-        className={`bg-main-color absolute -left-5 h-40 w-5 rounded-l-lg drop-shadow-2xl backdrop-blur`}
+        className={`absolute right-full h-40 w-5 rounded-l-lg bg-main-color drop-shadow-2xl backdrop-blur`}
         onClick={() =>
           setTranslateX((e) =>
             e == "translate-x-full" ? "translate-x-0" : "translate-x-full",
@@ -39,9 +40,15 @@ export default function Menu() {
         }
       />
       <Theme />
+      <Fonts />
       <button
-        className={`bg-red-900 h-20 w-40`}
-        onClick={() => deleteTable()}
+        className={`h-20 w-40 bg-red-900`}
+        onClick={() => {
+          if (confirm("You are deleting all data. Do you want to proceed?")) {
+            deleteTable();
+            window.location.reload();
+          }
+        }}
       >
         Delete All Data
       </button>
