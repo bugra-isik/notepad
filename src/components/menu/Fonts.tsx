@@ -4,12 +4,21 @@ import { useStore } from "zustand";
 export default function Fonts() {
   const { setFontFamily } = useStore(themeStore);
 
+  const fontFamilies = ["roboto", "caveat", "script"];
+  const Component = () => (
+    <div className={`grid w-full grid-cols-3`}>
+      {fontFamilies.map((e) => (
+        <button key={e} className={`h3`} onClick={() => setFontFamily(e)}>
+          {e}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
-    <div className={`flex flex-col`}>
-      <h1>Fonts</h1>
-      <button onClick={() => setFontFamily("roboto")}>roboto</button>
-      <button onClick={() => setFontFamily("caveat")}>caveat</button>
-      <button onClick={() => setFontFamily("script")}>script</button>
+    <div className={`flex w-full flex-col items-center justify-center`}>
+      <h1 className={`h1`}>Fonts</h1>
+      <Component />
     </div>
   );
 }

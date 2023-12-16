@@ -1,23 +1,33 @@
 import { useStore } from "zustand";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { themeStore } from "@/stores/themeStore";
 import { editorStore } from "@/stores/editorStore";
-import { VscCircleLarge, VscEdit } from "react-icons/vsc";
+import { VscEdit } from "react-icons/vsc";
 import { db } from "@/db";
 import { utilityStore } from "@/stores/utiltyStore";
 
 export default function Items() {
   const { currentTheme } = useStore(themeStore);
-  const { items, setItems, setCurrentItem, tabs, setTabs, setCurrentPage } =
-    useStore(editorStore);
+  const {
+    items,
+    setItems,
+    setCurrentItem,
+    tabs,
+    setTabs,
+    setCurrentPage,
+    setContent,
+  } = useStore(editorStore);
   const { setEditModal } = useStore(utilityStore);
-  // const [currentItem, setCurrentItem] = useState<string>("");
-  // const [currentIndex, setCurrentIndex] = useState<number>(0);
-  // const [toggle, setToggle] = useState<boolean>(true);
-  // const [inputValue, setInputValue] = useState<string>("");
-  // const editRef=useRef(null)
-
   const { hover, bg2 } = currentTheme;
+
+  const getData = useCallback(
+    async (currentTab: string) => {
+      setContent("");
+      const data = await db.myData.get(currentTab);
+      data && setContent(data.content ?? "");
+    },
+    [setContent],
+  );
 
   useEffect(() => {
     const getItems = async () => {
@@ -46,6 +56,7 @@ export default function Items() {
         key={index}
         className={`${hover} ${bg2} flex h-20 items-center justify-between rounded px-4 text-start text-lg drop-shadow-lg transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
         onClick={() => {
+          getData(item);
           setCurrentItem(item);
           !tabs.includes(item) && setTabs([...tabs, item]);
           setCurrentPage(item);

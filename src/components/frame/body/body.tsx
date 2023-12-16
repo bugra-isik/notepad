@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { RefObject } from "react";
 import { useStore } from "zustand";
 import NewTab from "./newTab/newTab";
 import Textarea from "./textarea/textarea";
@@ -10,23 +10,7 @@ export default function Body({
 }: {
   titleRef: RefObject<HTMLInputElement>;
 }) {
-  const { sourceMode, currentPage, setCurrentPage, tabs, setTabs } =
-    useStore(editorStore);
-
-  // useEffect(() => {
-  //   window.addEventListener("keypress", (e) => {
-  //     if (e.key === "Enter" && titleRef.current) {
-  //       const copyTabs = [...tabs];
-  //       setCurrentPage(titleRef.current?.value);
-  //       titleRef.current.blur();
-  //       const index = copyTabs.indexOf(currentPage);
-  //       if (index !== -1) {
-  //         copyTabs[index] = titleRef.current?.value;
-  //         setTabs(copyTabs);
-  //       }
-  //     }
-  //   });
-  // }, [setCurrentPage, tabs, setTabs, currentPage, titleRef]);
+  const { sourceMode, currentPage } = useStore(editorStore);
 
   return (
     <section
@@ -38,8 +22,7 @@ export default function Body({
       ) : sourceMode ? (
         <Textarea />
       ) : (
-        //<MarkdownArea />
-        <div></div>
+        <MarkdownArea />
       )}
     </section>
   );

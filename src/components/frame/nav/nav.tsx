@@ -19,13 +19,12 @@ export default function Nav() {
   const { bg1, bg2, hover, text } = currentTheme;
 
   const getData = useCallback(
-    async (currentTab: string) =>
-      tabs.length !== 0 &&
-      (await db.myData
-        .get(currentTab)
-        .then((e) => setContent(e?.content ?? ""))
-        .catch((e) => console.log(e))),
-    [setContent, tabs.length],
+    async (currentTab: string) => {
+      setContent("");
+      const data = await db.myData.get(currentTab);
+      data && setContent(data.content ?? "");
+    },
+    [setContent],
   );
 
   useEffect(() => {
@@ -35,14 +34,13 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
-    const getData = async () => {
-      await db.myData
-        .get(tabs[0])
-        .then((e) => setContent(e?.content ?? ""))
-        .catch((e) => console.error("Error" + e));
+    const getDataAtStartup = async () => {
+      const data = await db.myData.get(tabs[0]);
+      data && setContent(data.content ?? "sadas");
     };
-    tabs.length !== 0 && getData();
-  }, [tabs, setContent]);
+    getDataAtStartup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const getTabs = async () => {
@@ -67,44 +65,47 @@ export default function Nav() {
     putTabs();
   }, [tabs]);
 
-  const TabList = () =>
-    tabs.map((item, index) => {
-      const isCurrentPage = item === currentPage;
-      return (
-        <li
-          key={index}
-          className={`${
-            isCurrentPage ? bg2 : bg1
-          } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
-          onClick={() => {
-            setCurrentPage(item);
-            tabs.length !== 0 && getData(item);
-          }}
-          onMouseEnter={(e) =>
-            e.currentTarget.children[1].classList.remove("hidden")
-          }
-          onMouseLeave={(e) =>
-            e.currentTarget.children[1].classList.add("hidden")
-          }
-        >
-          <p className={`w-4/5 truncate`}>{item}</p>
-          <button
-            className={`hidden text-xl`}
-            onClick={(e) => {
-              e.stopPropagation();
-              setContent("");
-              setCurrentPage(index === 0 ? tabs[1] : tabs[index - 1]);
-              setTabs(tabs.filter((e) => e !== item));
-              if (tabs.length > 1) {
-                getData(index === 0 ? tabs[1] : tabs[index - 1]);
-              }
+  const TabList = () => (
+    <ul className={`flex h-full w-full  items-end gap-px overflow-x-scroll`}>
+      {tabs.map((item, index) => {
+        const isCurrentPage = item === currentPage;
+        return (
+          <li
+            key={index}
+            className={`${
+              isCurrentPage ? bg2 : bg1
+            } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
+            onClick={() => {
+              setCurrentPage(item);
+              tabs.length !== 0 && getData(item);
             }}
+            onMouseEnter={(e) =>
+              e.currentTarget.children[1].classList.remove("hidden")
+            }
+            onMouseLeave={(e) =>
+              e.currentTarget.children[1].classList.add("hidden")
+            }
           >
-            <VscClose />
-          </button>
-        </li>
-      );
-    });
+            <p className={`w-4/5 truncate`}>{item}</p>
+            <button
+              className={`hidden text-xl`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setContent("");
+                setCurrentPage(index === 0 ? tabs[1] : tabs[index - 1]);
+                setTabs(tabs.filter((e) => e !== item));
+                if (tabs.length > 1) {
+                  getData(index === 0 ? tabs[1] : tabs[index - 1]);
+                }
+              }}
+            >
+              <VscClose />
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
 
   return (
     <nav className={`${bg1} ${text}  relative z-50 flex h-8 w-full items-end`}>
@@ -115,9 +116,7 @@ export default function Nav() {
           <VscEdit title="Current mode: Read, click to edit" />
         )}
       </button>
-      <ul className={`flex h-full w-full  items-end gap-px overflow-x-scroll`}>
-        <TabList />
-      </ul>
+      <TabList />
     </nav>
   );
 }

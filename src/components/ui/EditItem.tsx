@@ -17,6 +17,7 @@ export default function EditItem() {
   const renameData = async (title: string) => {
     await db.myData.update(currentItem, { title: title, content: "" });
   };
+
   const deleteData = async (title: string) => {
     await db.myData.delete(title);
   };
@@ -113,6 +114,7 @@ export default function EditItem() {
                 onClick={() => {
                   deleteData(currentItem);
                   setItems(items.filter((e) => e !== currentItem));
+                  setTabs(tabs.filter((e) => e !== currentItem));
                   setEditModal();
                 }}
               >

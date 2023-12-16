@@ -27,6 +27,7 @@ export default function Textarea() {
       content: content,
     });
   };
+  
 
   return (
     <motion.textarea
