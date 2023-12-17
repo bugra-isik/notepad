@@ -2,7 +2,7 @@ import { RefObject } from "react";
 import { useStore } from "zustand";
 import NewTab from "./newTab/newTab";
 import Textarea from "./textarea/textarea";
-import MarkdownArea from "./markdownArea/markdownArea";
+import MarkdownArea from "./markdownArea/MarkdownArea";
 import { editorStore } from "@/stores/editorStore";
 
 export default function Body({
@@ -15,7 +15,7 @@ export default function Body({
   return (
     <section
       id="frame"
-      className={`relative flex w-4/5 grow flex-col items-center drop-shadow-lg`}
+      className={`relative flex w-4/5 grow flex-col items-center drop-shadow-lg overflow-scroll`}
     >
       {currentPage == undefined ? (
         <NewTab titleRef={titleRef} />

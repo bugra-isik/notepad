@@ -4,16 +4,46 @@ import { stackoverflowDark } from "react-syntax-highlighter/dist/esm/styles/hljs
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
 import { editorStore } from "@/stores/editorStore";
+import { useEffect, useRef } from "react";
+import { db } from "@/db";
 
 export default function MarkdownArea() {
-  const { content } = useStore(editorStore);
+  const { content, currentPage } = useStore(editorStore);
+  const mdRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const readScroll = async () => {
+      await db.myData
+        .get(currentPage)
+        .then(
+          (e) =>
+            e?.scroll &&
+            mdRef.current?.scroll(
+              0,
+              Number(
+                e.scroll *
+                  (mdRef.current?.scrollHeight - mdRef.current?.clientHeight),
+              ),
+            ),
+        );
+    };
+    readScroll();
+  }, [currentPage]);
+
+  const writeScroll = async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    const scrollRatio = scrollTop / (scrollHeight - clientHeight);
+    await db.myData.update(currentPage, { scroll: scrollRatio });
+  };
 
   return (
     <motion.span
+      ref={mdRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className={`h-full w-4/5 overflow-y-scroll pr-10`}
+      onScroll={(e) => writeScroll(e)}
     >
       <Markdown
         className={`markdown flex flex-col pb-80`}

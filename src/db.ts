@@ -5,6 +5,7 @@ export type Data = {
   content?: string;
   tabs?: string[];
   items?: string[];
+  scroll?:number
 };
 
 export class MySubClassedDexie extends Dexie {
@@ -13,7 +14,7 @@ export class MySubClassedDexie extends Dexie {
   constructor() {
     super("notepad");
     this.version(1).stores({
-      myData: "title, content, tabs, items",
+      myData: "title, content, tabs, items, scroll",
     });
   }
 }

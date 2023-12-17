@@ -2,19 +2,20 @@ import { db } from "@/db";
 import { editorStore } from "@/stores/editorStore";
 import { themeStore } from "@/stores/themeStore";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useStore } from "zustand";
 
 export default function Textarea() {
   const { content, setContent, currentPage } = useStore(editorStore);
-  const { currentTheme} = useStore(themeStore);
- 
+  const { currentTheme } = useStore(themeStore);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   useEffect(() => {
     const getData = async (currentTab: string) => {
       await db.myData
         .get(currentTab)
         .then((e) => {
-          e && setContent(e.content);
+          e && setContent(e.content ?? "");
         })
         .catch((e) => console.log(e));
     };
@@ -27,10 +28,14 @@ export default function Textarea() {
       content: content,
     });
   };
-  
+
+  useEffect(() => {
+    textAreaRef.current?.scroll(0, 500);
+  }, []);
 
   return (
     <motion.textarea
+      ref={textAreaRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

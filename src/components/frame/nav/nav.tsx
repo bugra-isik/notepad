@@ -18,9 +18,21 @@ export default function Nav() {
   } = useStore(editorStore);
   const { bg1, bg2, hover, text } = currentTheme;
 
+  useEffect(() => {
+    const getDataAtStartup = async () => {
+      const data = await db.myData.get("Tabs Array");
+      if (data && data?.tabs && data?.tabs?.length !== 0) {
+        await db.myData
+          .get(data?.tabs[0])
+          .then((e) => setContent(e?.content ?? ""));
+      }
+    };
+    getDataAtStartup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const getData = useCallback(
-    async (currentTab: string) => {
-      setContent("");
+    async (currentTab: string) => {     
       const data = await db.myData.get(currentTab);
       data && setContent(data.content ?? "");
     },
@@ -30,15 +42,6 @@ export default function Nav() {
   useEffect(() => {
     setCurrentPage(tabs[0]);
     tabs.length !== 0 && getData(currentPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const getDataAtStartup = async () => {
-      const data = await db.myData.get(tabs[0]);
-      data && setContent(data.content ?? "sadas");
-    };
-    getDataAtStartup()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
