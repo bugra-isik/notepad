@@ -13,13 +13,13 @@ export default function App() {
   const { currentTheme, fontFamily } = useStore(themeStore);
   const { createModal, editModal } = useStore(utilityStore);
 
-  const { bg0, scrollColor } = currentTheme;
+  const { scrollColor } = currentTheme;
 
   return (
     <main
-      className={`${bg0} ${scrollColor} ${fontFamily} relative flex h-screen w-screen min-w-full overflow-hidden p-4 pr-8 text-white transition`}
+      className={`${scrollColor} ${fontFamily} relative flex h-screen w-screen min-w-full overflow-hidden  text-white transition`}
     >
-      <div className={`z-10 flex w-full overflow-hidden rounded-lg`}>
+      <div className={`z-10 flex w-full overflow-hidden`}>
         <Explorer />
         <Frame />
       </div>

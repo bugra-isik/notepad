@@ -65,6 +65,8 @@ const themeStore = create<ThemeType>()((set) => ({
   setCurrentTheme: (e) => set(() => ({ currentTheme: themes[e] })),
   fontFamily: fontFamily.roboto,
   setFontFamily: (e) => set(() => ({ fontFamily: fontFamily[e] })),
+  auxTheme: "#8a5cf5",
+  setAuxTheme: (e) => set(() => ({ auxTheme: e })),
 }));
 
 export { themeStore };

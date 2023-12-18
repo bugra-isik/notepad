@@ -5,7 +5,7 @@ import { VscAdd } from "react-icons/vsc";
 import { utilityStore } from "@/stores/utiltyStore";
 
 export default function Explorer() {
-  const { currentTheme } = useStore(themeStore);
+  const { currentTheme, auxTheme } = useStore(themeStore);
   const { setCreateModal } = useStore(utilityStore);
 
   return (
@@ -17,6 +17,7 @@ export default function Explorer() {
         <button
           className={`${currentTheme.hover} flex h-20 w-full items-center justify-center rounded text-start text-3xl transition`}
           onClick={() => setCreateModal()}
+          style={{ color: auxTheme }}
         >
           <VscAdd />
         </button>

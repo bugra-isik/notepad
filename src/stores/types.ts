@@ -14,6 +14,8 @@ export type ThemeType = {
   setCurrentTheme: (e: string) => void;
   fontFamily: string;
   setFontFamily: (e: string) => void;
+  auxTheme: string;
+  setAuxTheme: (e: string) => void;
 };
 
 export type EditorType = {

@@ -5,6 +5,7 @@ import { editorStore } from "@/stores/editorStore";
 import { VscEdit } from "react-icons/vsc";
 import { db } from "@/db";
 import { utilityStore } from "@/stores/utiltyStore";
+import { useHover } from "@uidotdev/usehooks";
 
 export default function Items() {
   const { currentTheme } = useStore(themeStore);
@@ -22,7 +23,6 @@ export default function Items() {
 
   const getData = useCallback(
     async (currentTab: string) => {
-      setContent("");
       const data = await db.myData.get(currentTab);
       data && setContent(data.content ?? "");
     },
@@ -50,9 +50,12 @@ export default function Items() {
     putItems();
   }, [items]);
 
-  const ListItem = () =>
-    items.map((item, index) => (
+  const ListItem = () => {
+    const [ref, hovering] = useHover();
+
+    return items.map((item, index) => (
       <button
+        ref={ref}
         key={index}
         className={`${hover} ${bg2} flex h-20 items-center justify-between rounded px-4 text-start text-lg drop-shadow-lg transition sm:text-2xl md:text-3xl lg:text-lg xl:text-2xl 2xl:text-3xl`}
         onClick={() => {
@@ -67,6 +70,10 @@ export default function Items() {
         onMouseLeave={(e) =>
           e.currentTarget.children[1].classList.add("hidden")
         }
+        style={{
+          backgroundColor: item == "neme" ? "#608a5c" : "",
+          opacity: item == "neme" && hovering ? 0.75 : 1,
+        }}
       >
         <p>{item}</p>
         <i
@@ -81,6 +88,7 @@ export default function Items() {
         </i>
       </button>
     ));
+  };
 
   return (
     <div className={`mb-4 grid grid-cols-1 gap-y-4`}>

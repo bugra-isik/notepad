@@ -8,7 +8,7 @@ import { useStore } from "zustand";
 export default function Textarea() {
   const { content, setContent, currentPage } = useStore(editorStore);
   const { currentTheme } = useStore(themeStore);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const getData = async (currentTab: string) => {
@@ -30,12 +30,34 @@ export default function Textarea() {
   };
 
   useEffect(() => {
-    textAreaRef.current?.scroll(0, 500);
-  }, []);
+    const readScroll = async () => {
+      await db.myData
+        .get(currentPage)
+        .then(
+          (e) =>
+            e?.scroll &&
+            textRef.current?.scroll(
+              0,
+              Number(
+                e.scroll *
+                  (textRef.current?.scrollHeight -
+                    textRef.current?.clientHeight),
+              ),
+            ),
+        );
+    };
+    readScroll();
+  }, [currentPage]);
+
+  const writeScroll = async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    const scrollRatio = scrollTop / (scrollHeight - clientHeight);
+    await db.myData.update(currentPage, { scroll: scrollRatio });
+  };
 
   return (
     <motion.textarea
-      ref={textAreaRef}
+      ref={textRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -46,6 +68,7 @@ export default function Textarea() {
         setContent(e.currentTarget.value);
         addData(e.currentTarget.value);
       }}
+      onScroll={(e) => writeScroll(e)}
     />
   );
 }

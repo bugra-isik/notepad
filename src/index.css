@@ -13,6 +13,10 @@
   display: none !important;
 }
 
+:root {
+  --dynamicColor: #8a5cf5;
+}
+
 @layer components {
   .h1 {
     @apply text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl 2xl:text-4xl;
@@ -34,7 +38,7 @@
 
 #frame h1 {
   font-size: 3rem;
-  color: #8a5cf5;
+  color: var(--dynamicColor);
   font-weight: bold;
 }
 

@@ -18,9 +18,9 @@ export default function Theme() {
   const themes = ["theme1", "theme2", "theme3"];
 
   return (
-    <div>
-      <h1 className={`h1`}>Themes</h1>
-      <div className="grid grid-cols-2 gap-5">
+    <div className={`h1 flex w-4/5 flex-col gap-y-4 items-center`}>
+      <h1 className={`h1`}>Main theme</h1>
+      <div className="flex gap-5 w-full justify-between">
         {["#262626", "#f6f6f6", "#181c20"].map((color, index) => (
           <button
             key={index}

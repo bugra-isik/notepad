@@ -15,7 +15,7 @@ export default function EditItem() {
   const ref = useRef<HTMLInputElement>(null);
 
   const renameData = async (title: string) => {
-    await db.myData.update(currentItem, { title: title, content: "" });
+    await db.myData.update(currentItem, { title: title });
   };
 
   const deleteData = async (title: string) => {
