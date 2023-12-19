@@ -52,6 +52,18 @@ export const themes: Record<
     scrollColor: "scroll3",
     color1: "text-[#8a5cf5]",
   },
+  theme4: {
+    id: "theme4",
+    bg0: "bg-[#191621]/95",
+    bg1: "bg-[#191621]",
+    bg2: "bg-[#100e17]",
+    bg3: "bg-[#b3b3b3]",
+    text: "text-[#b3b3b3]",
+    border: "border-[#b3b3b3]/50",
+    hover: "hover:bg-[#b3b3b3]/10",
+    scrollColor: "scroll3",
+    color1: "text-[#8a5cf5]",
+  },
 };
 
 const fontFamily: { [key: string]: string } = {

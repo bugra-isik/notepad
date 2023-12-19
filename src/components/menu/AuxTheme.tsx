@@ -1,16 +1,26 @@
 import { themeStore } from "@/stores/themeStore";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useStore } from "zustand";
 
 export default function AuxTheme() {
   const { setAuxTheme } = useStore(themeStore);
 
+  const dynamicColor = useCallback((i: string) => {
+    const root = document.documentElement;
+    root.style.setProperty("--dynamicColor", i);
+  }, []);
+
   useEffect(() => {
     const local = localStorage.getItem("AuxTheme");
     if (local != null) {
       setAuxTheme(local);
+      dynamicColor(local);
     }
-  }, [setAuxTheme]);
+  }, [setAuxTheme, dynamicColor]);
+
+  const deneme=255
+
+  console.log(deneme.toString())
 
   const colors = [
     "#8a5cf5",
@@ -18,9 +28,9 @@ export default function AuxTheme() {
     "#FFC7C7",
     "#f6f6f6",
     "#222831",
-    "#00adb5",
+    "#6b96f2",
     "#3f72af",
-    "#6a2c70",
+    "#dd2d4a",
     "#b83b5e",
     "#f08a5d",
     "#f9ed69",
@@ -28,6 +38,11 @@ export default function AuxTheme() {
     "#f38181",
     "#a8d8ea",
     "#9e7676",
+    "#3498db",
+    "#2ecc71",
+    "#8e44ad",
+    "#e74c3c",
+    "#f39c12",
   ];
 
   return (
@@ -41,8 +56,7 @@ export default function AuxTheme() {
             onClick={() => {
               setAuxTheme(i);
               localStorage.setItem("AuxTheme", i);
-              const root = document.documentElement;
-              root.style.setProperty("--dynamicColor", i);
+              dynamicColor(i);
             }}
             style={{ backgroundColor: i }}
           />

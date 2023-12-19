@@ -1,12 +1,10 @@
 import { useStore } from "zustand";
 import Items from "./items";
 import { themeStore } from "@/stores/themeStore";
-import { VscAdd } from "react-icons/vsc";
-import { utilityStore } from "@/stores/utiltyStore";
 
 export default function Explorer() {
-  const { currentTheme, auxTheme } = useStore(themeStore);
-  const { setCreateModal } = useStore(utilityStore);
+  const { currentTheme } = useStore(themeStore);
+
 
   return (
     <section
@@ -14,13 +12,7 @@ export default function Explorer() {
     >
       <div className={`h-full w-full overflow-y-scroll`}>
         <Items />
-        <button
-          className={`${currentTheme.hover} flex h-20 w-full items-center justify-center rounded text-start text-3xl transition`}
-          onClick={() => setCreateModal()}
-          style={{ color: auxTheme }}
-        >
-          <VscAdd />
-        </button>
+        
       </div>
     </section>
   );

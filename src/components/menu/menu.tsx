@@ -30,7 +30,7 @@ export default function Menu() {
 
   return (
     <section
-      className={`${translateX} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center bg-black/75 backdrop-blur transition duration-500 ease-out`}
+      className={`${translateX} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center bg-black/75 backdrop-blur transition duration-500 ease-out font-sans`}
     >
       <button
         ref={ref}
@@ -42,7 +42,7 @@ export default function Menu() {
         }
         style={{
           backgroundColor: auxTheme,
-          opacity: hovering ? 1 : 0.5,
+          opacity: hovering || translateX == "translate-x-0" ? 1 : 0.5,
         }}
       />
       <div
