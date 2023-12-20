@@ -143,6 +143,7 @@ export default function EditItem() {
       onClick={() => {
         setEditModal();
       }}
+      style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <CurrentToggle value={toggle} />
     </motion.div>

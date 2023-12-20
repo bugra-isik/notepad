@@ -18,10 +18,6 @@ export default function AuxTheme() {
     }
   }, [setAuxTheme, dynamicColor]);
 
-  const deneme=255
-
-  console.log(deneme.toString())
-
   const colors = [
     "#8a5cf5",
     "#608a5c",

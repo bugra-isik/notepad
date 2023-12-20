@@ -1,5 +1,5 @@
 import { useStore } from "zustand";
-import { useCallback, useEffect } from "react";
+import { Children, useCallback, useEffect } from "react";
 import { themeStore } from "@/stores/themeStore";
 import { editorStore } from "@/stores/editorStore";
 import { VscEdit, VscAdd } from "react-icons/vsc";
@@ -48,14 +48,27 @@ export default function Items() {
     };
     putItems();
   }, [items]);
- 
 
   return (
     <div className={`mb-4 grid grid-cols-1 gap-y-2`}>
       {items.map((item, index) => (
         <button
+          draggable
+          onMouseOver={(e) =>
+            e.currentTarget.children[
+              e.currentTarget.children.length - 1
+            ].classList.remove("hidden")
+          }
+          onMouseOut={(e) =>
+            e.currentTarget.children[
+              e.currentTarget.children.length - 1
+            ].classList.add("hidden")
+          }
+          onDragOver={(e) => e.preventDefault()}
+          onDragStart={(e) => console.log(e)}
+          // onDrop={(e) => console.log(e.currentTarget.innerText)}
           key={index}
-          className={`${hover} ${bg2} flex h-8 items-center justify-between rounded px-4 text-start drop-shadow-lg transition`}
+          className={`${hover} ${bg2} relative flex h-8 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
             setCurrentItem(item);
@@ -68,8 +81,9 @@ export default function Items() {
           onMouseLeave={(e) =>
             e.currentTarget.children[1].classList.add("hidden")
           }
+          style={{}}
         >
-          <p>{item}</p>
+          <p className={`size-full flex items-center`}>{item}</p>
           <i
             className={`hidden text-lg`}
             onClick={(e) => {
@@ -80,6 +94,12 @@ export default function Items() {
           >
             <VscEdit />
           </i>
+          <div
+            className={`absolute inset-x-0 top-full hidden h-1`}
+            style={{
+              backgroundColor: auxTheme,
+            }}
+          />
         </button>
       ))}
       <button

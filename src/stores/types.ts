@@ -38,4 +38,6 @@ export type Utility = {
   setCreateModal: () => void;
   editModal: boolean;
   setEditModal: () => void;
+  deleteAllDataModal: boolean;
+  setDeleteAllDataModal: () => void;
 };

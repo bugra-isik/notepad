@@ -1,23 +1,13 @@
 import { db } from "@/db";
-import { editorStore } from "@/stores/editorStore";
 import { themeStore } from "@/stores/themeStore";
 import { utilityStore } from "@/stores/utiltyStore";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import { useStore } from "zustand";
 
-export default function CreateItem() {
-  const { setCreateModal } = useStore(utilityStore);
+export default function DeleteAllData() {
+  const { setDeleteAllDataModal } = useStore(utilityStore);
   const { currentTheme } = useStore(themeStore);
-  const { items, setItems } = useStore(editorStore);
-  const ref = useRef<HTMLInputElement>(null);
-
-  const addData = async (title: string) => {
-    await db.myData.put({
-      title: title,
-      content: "",
-    });
-  };
+  const deleteTable = async () => await db.myData.clear();
 
   return (
     <motion.div
@@ -26,7 +16,7 @@ export default function CreateItem() {
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
       className={`absolute inset-0 z-[999] grid place-items-center bg-black/75`}
       onClick={() => {
-        setCreateModal();
+        setDeleteAllDataModal();
       }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
@@ -36,35 +26,25 @@ export default function CreateItem() {
           e.stopPropagation();
         }}
       >
-        <h1 className={`text-center`}>Enter file name</h1>
-        <input
-          ref={ref}
-          type="text"
-          autoFocus
-          className={`${currentTheme.bg2} ${currentTheme.hover} h-1/4 w-full rounded px-4 outline-none transition`}
-        />
+        <h1 className={`text-center`}>
+          You are deleting all data. Do you want to proceed?
+        </h1>
         <div className={`flex w-full items-center justify-between`}>
           <button
             className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
             onClick={(e) => {
               e.stopPropagation();
-              if (
-                ref.current &&
-                ref.current.value !== "" &&
-                !items.includes(ref.current.value)
-              ) {
-                setItems([...items, ref.current.value]);
-                addData(ref.current.value);
-                setCreateModal();
-              }
+              setDeleteAllDataModal();
+              deleteTable();
+              window.location.reload();
             }}
           >
-            Create
+            Delete
           </button>
           <button
             className={`${currentTheme.hover} rounded px-2 py-1`}
             onClick={() => {
-              setCreateModal();
+              setDeleteAllDataModal();
             }}
           >
             Cancel

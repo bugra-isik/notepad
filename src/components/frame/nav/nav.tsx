@@ -32,7 +32,7 @@ export default function Nav() {
   }, []);
 
   const getData = useCallback(
-    async (currentTab: string) => {     
+    async (currentTab: string) => {
       const data = await db.myData.get(currentTab);
       data && setContent(data.content ?? "");
     },
@@ -69,15 +69,15 @@ export default function Nav() {
   }, [tabs]);
 
   const TabList = () => (
-    <ul className={`flex h-full w-full  items-end gap-px overflow-x-scroll`}>
+    <ul className={`flex h-full w-full items-end gap-px overflow-x-scroll`}>
       {tabs.map((item, index) => {
         const isCurrentPage = item === currentPage;
         return (
           <li
             key={index}
             className={`${
-              isCurrentPage ? bg2 : bg1
-            } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 transition focus:bg-black`}
+              isCurrentPage && bg2
+            } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 focus:bg-black`}
             onClick={() => {
               setCurrentPage(item);
               tabs.length !== 0 && getData(item);
@@ -111,7 +111,9 @@ export default function Nav() {
   );
 
   return (
-    <nav className={`${bg1} ${text}  relative z-50 flex h-8 w-full items-end`}>
+    <nav
+      className={`${bg1} ${text} relative z-50 flex h-8 w-full items-end`}
+    >
       <button className={`px-8 py-1 text-2xl`} onClick={() => setSourceMode()}>
         {sourceMode ? (
           <VscBook title="Current mode: Edit, click to read" />

@@ -6,6 +6,9 @@ const utilityStore = create<Utility>()((set) => ({
   setCreateModal: () => set((e) => ({ createModal: !e.createModal })),
   editModal: false,
   setEditModal: () => set((e) => ({ editModal: !e.editModal })),
+  deleteAllDataModal: false,
+  setDeleteAllDataModal: () =>
+    set((e) => ({ deleteAllDataModal: !e.deleteAllDataModal })),
 }));
 
 export { utilityStore };

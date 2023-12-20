@@ -1,17 +1,12 @@
 import { useStore } from "zustand";
 import { themeStore } from "./stores/themeStore";
-import Frame from "./components/frame/frame";
-import Menu from "./components/menu/menu";
-import Explorer from "./components/explorer/explorer";
 
-import { utilityStore } from "./stores/utiltyStore";
-import { AnimatePresence } from "framer-motion";
-import CreateItem from "./components/ui/CreateItem";
-import EditItem from "./components/ui/EditItem";
+import Modals from "./components/ui/Modals";
+import Container from "./components/Container";
+import SideMenu from "./components/menu/SideMenu";
 
 export default function App() {
   const { currentTheme, fontFamily } = useStore(themeStore);
-  const { createModal, editModal } = useStore(utilityStore);
 
   const { scrollColor } = currentTheme;
 
@@ -19,13 +14,9 @@ export default function App() {
     <main
       className={`${scrollColor} ${fontFamily} relative flex h-screen w-screen min-w-full overflow-hidden  text-white transition`}
     >
-      <div className={`z-10 flex w-full overflow-hidden`}>
-        <Explorer />
-        <Frame />
-      </div>
-      <Menu />
-      <AnimatePresence>{createModal && <CreateItem />}</AnimatePresence>
-      <AnimatePresence>{editModal && <EditItem />}</AnimatePresence>
+      <Container />
+      <SideMenu />
+      <Modals />
     </main>
   );
 }

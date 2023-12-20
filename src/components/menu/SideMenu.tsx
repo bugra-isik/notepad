@@ -7,11 +7,12 @@ import AuxTheme from "./AuxTheme";
 import { useStore } from "zustand";
 import { themeStore } from "@/stores/themeStore";
 
-export default function Menu() {
+export default function SideMenu() {
   const [translateX, setTranslateX] = useState<string>("translate-x-full");
-  const { auxTheme } = useStore(themeStore);
+  const { auxTheme, currentTheme } = useStore(themeStore);
   const { width } = useWindowSize();
   const [ref, hovering] = useHover();
+  const { bg2 } = currentTheme;
 
   useEffect(() => {
     if (width) {
@@ -30,7 +31,7 @@ export default function Menu() {
 
   return (
     <section
-      className={`${translateX} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center bg-black/75 backdrop-blur transition duration-500 ease-out font-sans`}
+      className={`${translateX} ${bg2} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center  font-sans drop-shadow-2xl backdrop-blur transition duration-500 ease-out`}
     >
       <button
         ref={ref}

@@ -1,16 +1,13 @@
-import { db } from "@/db";
+import { utilityStore } from "@/stores/utiltyStore";
+import { useStore } from "zustand";
 
 export default function Delete() {
-  const deleteTable = async () => await db.myData.clear();
+  const { setDeleteAllDataModal } = useStore(utilityStore);
+
   return (
     <button
       className={`h-20 w-40 bg-red-900`}
-      onClick={() => {
-        if (confirm("You are deleting all data. Do you want to proceed?")) {
-          deleteTable();
-          window.location.reload();
-        }
-      }}
+      onClick={() => setDeleteAllDataModal()}
     >
       Delete All Data
     </button>
