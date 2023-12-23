@@ -1,4 +1,4 @@
-import { utilityStore } from "@/stores/utiltyStore";
+import { utilityStore } from "@/Stores/UtiltyStore";
 import { useStore } from "zustand";
 
 export default function Delete() {

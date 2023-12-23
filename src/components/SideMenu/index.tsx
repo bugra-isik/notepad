@@ -5,7 +5,7 @@ import Fonts from "./Fonts";
 import Delete from "./Delete";
 import AuxTheme from "./AuxTheme";
 import { useStore } from "zustand";
-import { themeStore } from "@/stores/themeStore";
+import { themeStore } from "@/Stores/ThemeStore";
 
 export default function SideMenu() {
   const [translateX, setTranslateX] = useState<string>("translate-x-full");
@@ -31,7 +31,10 @@ export default function SideMenu() {
 
   return (
     <section
-      className={`${translateX} ${bg2} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center  font-sans drop-shadow-2xl backdrop-blur transition duration-500 ease-out`}
+      className={`${translateX} ${bg2} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center  font-sans drop-shadow-2xl backdrop-blur transition-transform duration-500 ease-out`}
+      style={{
+        borderLeft: `1px solid ${auxTheme}`,
+      }}
     >
       <button
         ref={ref}

@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { EditorType } from "./types";
+import { EditorType } from "./Types";
 
 const editorStore = create<EditorType>()((set) => ({
   sourceMode: false,
-  setSourceMode: () => set((e) => ({ sourceMode: !e.sourceMode })),
+  setSourceMode: (e) => set(() => ({ sourceMode: e })),
   currentPage: "",
   setCurrentPage: (e) => set(() => ({ currentPage: e })),
   tabs: [],

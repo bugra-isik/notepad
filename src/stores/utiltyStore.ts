@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Utility } from "./types";
+import { Utility } from "./Types";
 
 const utilityStore = create<Utility>()((set) => ({
   createModal: false,

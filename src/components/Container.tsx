@@ -1,5 +1,5 @@
-import Explorer from "./explorer/explorer";
-import Frame from "./frame/frame";
+import Explorer from "./Explorer";
+import Frame from "./Frame";
 
 export default function Container() {
   return (

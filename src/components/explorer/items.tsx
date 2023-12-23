@@ -1,10 +1,10 @@
 import { useStore } from "zustand";
-import { Children, useCallback, useEffect } from "react";
-import { themeStore } from "@/stores/themeStore";
-import { editorStore } from "@/stores/editorStore";
+import { useCallback, useEffect, useState } from "react";
 import { VscEdit, VscAdd } from "react-icons/vsc";
 import { db } from "@/db";
-import { utilityStore } from "@/stores/utiltyStore";
+import { themeStore } from "@/Stores/ThemeStore";
+import { editorStore } from "@/Stores/EditorStore";
+import { utilityStore } from "@/Stores/UtiltyStore";
 
 export default function Items() {
   const { currentTheme, auxTheme } = useStore(themeStore);
@@ -19,6 +19,9 @@ export default function Items() {
   } = useStore(editorStore);
   const { setEditModal, setCreateModal } = useStore(utilityStore);
   const { hover, bg2 } = currentTheme;
+  const [dragStart, setDragStart] = useState<number>(0);
+
+  
 
   const getData = useCallback(
     async (currentTab: string) => {
@@ -47,27 +50,37 @@ export default function Items() {
       });
     };
     putItems();
-  }, [items]);
+  }, [items]);  
+
+  const switchItems = useCallback(
+    (arg1: number) => {
+      const newArr = items.map((item, index) => {
+        if (index === arg1) {
+          return items[dragStart];
+        }
+        if (index === dragStart) {
+          return items[arg1];
+        } else {
+          return item;
+        }
+      });
+
+      setItems(newArr);
+    },
+    [dragStart, items, setItems],
+  );
 
   return (
     <div className={`mb-4 grid grid-cols-1 gap-y-2`}>
       {items.map((item, index) => (
         <button
-          draggable
-          onMouseOver={(e) =>
-            e.currentTarget.children[
-              e.currentTarget.children.length - 1
-            ].classList.remove("hidden")
-          }
-          onMouseOut={(e) =>
-            e.currentTarget.children[
-              e.currentTarget.children.length - 1
-            ].classList.add("hidden")
-          }
-          onDragOver={(e) => e.preventDefault()}
-          onDragStart={(e) => console.log(e)}
-          // onDrop={(e) => console.log(e.currentTarget.innerText)}
           key={index}
+          draggable
+          onDragOver={(e) => e.preventDefault()}
+          onDragStart={() => setDragStart(index)}
+          onDrop={() => {
+            switchItems(index);
+          }}
           className={`${hover} ${bg2} relative flex h-8 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
@@ -83,7 +96,7 @@ export default function Items() {
           }
           style={{}}
         >
-          <p className={`size-full flex items-center`}>{item}</p>
+          <p className={`flex size-full items-center`}>{item}</p>
           <i
             className={`hidden text-lg`}
             onClick={(e) => {
@@ -94,12 +107,6 @@ export default function Items() {
           >
             <VscEdit />
           </i>
-          <div
-            className={`absolute inset-x-0 top-full hidden h-1`}
-            style={{
-              backgroundColor: auxTheme,
-            }}
-          />
         </button>
       ))}
       <button

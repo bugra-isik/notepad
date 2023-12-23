@@ -1,9 +1,10 @@
-import { themeStore } from "@/stores/themeStore";
+import { themeStore } from "@/Stores/ThemeStore";
 import { useCallback, useEffect } from "react";
 import { useStore } from "zustand";
 
 export default function AuxTheme() {
-  const { setAuxTheme } = useStore(themeStore);
+  const { setAuxTheme, currentTheme } = useStore(themeStore);
+  const { text } = currentTheme;
 
   const dynamicColor = useCallback((i: string) => {
     const root = document.documentElement;
@@ -43,7 +44,7 @@ export default function AuxTheme() {
 
   return (
     <div className={`h1 flex w-4/5 flex-col gap-y-4`}>
-      <h1 className={`text-center`}>Secondary theme</h1>
+      <h1 className={`${text} text-center`}>Secondary theme</h1>
       <div className={`grid grid-cols-5 place-items-center gap-5`}>
         {colors.map((i, index) => (
           <button

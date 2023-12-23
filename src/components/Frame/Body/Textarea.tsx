@@ -1,8 +1,8 @@
+import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
-import { editorStore } from "@/stores/editorStore";
-import { themeStore } from "@/stores/themeStore";
+import { editorStore } from "@/Stores/EditorStore";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useStore } from "zustand";
 
 export default function Textarea() {
@@ -21,13 +21,6 @@ export default function Textarea() {
     };
     getData(currentPage);
   }, [currentPage, setContent]);
-
-  const addData = async (content: string) => {
-    await db.myData.put({
-      title: currentPage,
-      content: content,
-    });
-  };
 
   useEffect(() => {
     const readScroll = async () => {
@@ -49,11 +42,28 @@ export default function Textarea() {
     readScroll();
   }, [currentPage]);
 
-  const writeScroll = async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    const scrollRatio = scrollTop / (scrollHeight - clientHeight);
-    await db.myData.update(currentPage, { scroll: scrollRatio });
-  };
+  const addData = useCallback(
+    async (content: string) => {
+      await db.myData.put({
+        title: currentPage,
+        content: content,
+      });
+    },
+    [currentPage],
+  );
+
+  const writeScroll = useCallback(
+    async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {
+      const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+      const scrollRatio = scrollTop / (scrollHeight - clientHeight);
+      await db.myData.update(currentPage, { scroll: scrollRatio });
+    },
+    [currentPage],
+  );
+
+  const checkFirstTime = useCallback(async () => {
+    localStorage.setItem("CheckFirstTime", "OK");
+  }, []);
 
   return (
     <motion.textarea
@@ -63,12 +73,18 @@ export default function Textarea() {
       transition={{ duration: 0.5 }}
       id="content"
       value={content}
-      className={`${currentTheme.bg1} flex h-full w-4/5 resize-none whitespace-pre-wrap pb-80 pr-10 pt-20 focus:outline-none`}
+      placeholder={
+        localStorage.getItem("CheckFirstTime")
+          ? ""
+          : "Embrace the blank page, let your thoughts dance..."
+      }
+      className={`${currentTheme.bg1} flex h-full w-4/5 resize-none pb-80 pr-10 pt-20 focus:outline-none`}
       onChange={(e) => {
         setContent(e.currentTarget.value);
         addData(e.currentTarget.value);
       }}
       onScroll={(e) => writeScroll(e)}
+      onBlur={() => checkFirstTime()}
     />
   );
 }

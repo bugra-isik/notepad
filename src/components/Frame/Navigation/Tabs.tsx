@@ -1,22 +1,16 @@
 import { useStore } from "zustand";
-import { editorStore } from "@/stores/editorStore";
-import { themeStore } from "@/stores/themeStore";
+import { editorStore } from "@/Stores/EditorStore";
 import { db } from "@/db";
-import { useCallback, useEffect } from "react";
-import { VscClose, VscBook, VscEdit } from "react-icons/vsc";
+import { useCallback, useEffect, useState } from "react";
+import { VscClose } from "react-icons/vsc";
+import { themeStore } from "@/Stores/ThemeStore";
 
-export default function Nav() {
+export default function Tabs() {
   const { currentTheme } = useStore(themeStore);
-  const {
-    currentPage,
-    setCurrentPage,
-    sourceMode,
-    setSourceMode,
-    tabs,
-    setTabs,
-    setContent,
-  } = useStore(editorStore);
-  const { bg1, bg2, hover, text } = currentTheme;
+  const { currentPage, setCurrentPage, tabs, setTabs, setContent } =
+    useStore(editorStore);
+  const { bg2, hover } = currentTheme;
+  const [dragStart, setDragStart] = useState<number>(0);
 
   useEffect(() => {
     const getDataAtStartup = async () => {
@@ -68,16 +62,40 @@ export default function Nav() {
     putTabs();
   }, [tabs]);
 
-  const TabList = () => (
+  const switchTabs = useCallback(
+    (arg1: number) => {
+      const newArr = tabs.map((item, index) => {
+        if (index === arg1) {
+          return tabs[dragStart];
+        }
+        if (index === dragStart) {
+          return tabs[arg1];
+        } else {
+          return item;
+        }
+      });
+
+      setTabs(newArr);
+    },
+    [dragStart, setTabs, tabs],
+  );
+
+  return (
     <ul className={`flex h-full w-full items-end gap-px overflow-x-scroll`}>
       {tabs.map((item, index) => {
         const isCurrentPage = item === currentPage;
         return (
           <li
             key={index}
+            draggable
+            onDragOver={(e) => e.preventDefault()}
+            onDragStart={() => setDragStart(index)}
+            onDrop={() => {
+              switchTabs(index);
+            }}
             className={`${
               isCurrentPage && bg2
-            } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 focus:bg-black`}
+            } ${hover} flex h-4/5 w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate rounded-t-lg px-5 focus:bg-black pb-1`}
             onClick={() => {
               setCurrentPage(item);
               tabs.length !== 0 && getData(item);
@@ -108,20 +126,5 @@ export default function Nav() {
         );
       })}
     </ul>
-  );
-
-  return (
-    <nav
-      className={`${bg1} ${text} relative z-50 flex h-8 w-full items-end`}
-    >
-      <button className={`px-8 py-1 text-2xl`} onClick={() => setSourceMode()}>
-        {sourceMode ? (
-          <VscBook title="Current mode: Edit, click to read" />
-        ) : (
-          <VscEdit title="Current mode: Read, click to edit" />
-        )}
-      </button>
-      <TabList />
-    </nav>
   );
 }

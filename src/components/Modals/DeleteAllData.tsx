@@ -1,13 +1,14 @@
+import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
-import { themeStore } from "@/stores/themeStore";
-import { utilityStore } from "@/stores/utiltyStore";
+import { utilityStore } from "@/Stores/UtiltyStore";
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
+import { useCallback } from "react";
 
 export default function DeleteAllData() {
   const { setDeleteAllDataModal } = useStore(utilityStore);
-  const { currentTheme } = useStore(themeStore);
-  const deleteTable = async () => await db.myData.clear();
+  const { currentTheme, auxTheme } = useStore(themeStore);
+  const deleteTable = useCallback(async () => await db.myData.clear(), []);
 
   return (
     <motion.div
@@ -38,6 +39,7 @@ export default function DeleteAllData() {
               deleteTable();
               window.location.reload();
             }}
+            style={{ color: auxTheme }}
           >
             Delete
           </button>

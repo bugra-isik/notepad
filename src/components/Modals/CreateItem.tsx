@@ -1,23 +1,27 @@
+import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
-import { editorStore } from "@/stores/editorStore";
-import { themeStore } from "@/stores/themeStore";
-import { utilityStore } from "@/stores/utiltyStore";
+import { editorStore } from "@/Stores/EditorStore";
+import { utilityStore } from "@/Stores/UtiltyStore";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useStore } from "zustand";
 
 export default function CreateItem() {
   const { setCreateModal } = useStore(utilityStore);
-  const { currentTheme } = useStore(themeStore);
+  const { currentTheme,auxTheme } = useStore(themeStore);
   const { items, setItems } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
 
-  const addData = async (title: string) => {
-    await db.myData.put({
-      title: title,
-      content: "",
-    });
-  };
+  const addData = useCallback(
+    async (title: string) => {
+      await db.myData.put({
+        title: title,
+        content: "",
+      });
+    },
+    [],
+  )
+  
 
   return (
     <motion.div
@@ -45,7 +49,7 @@ export default function CreateItem() {
         />
         <div className={`flex w-full items-center justify-between`}>
           <button
-            className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
+            className={`${currentTheme.hover} rounded px-2 py-1`}
             onClick={(e) => {
               e.stopPropagation();
               if (
@@ -58,6 +62,7 @@ export default function CreateItem() {
                 setCreateModal();
               }
             }}
+            style={{color:auxTheme}}
           >
             Create
           </button>

@@ -5,7 +5,7 @@ export type Data = {
   content?: string;
   tabs?: string[];
   items?: string[];
-  scroll?:number
+  scroll?: number;
 };
 
 export class MySubClassedDexie extends Dexie {

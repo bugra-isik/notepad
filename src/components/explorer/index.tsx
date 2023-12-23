@@ -1,6 +1,6 @@
+import { themeStore } from "@/Stores/ThemeStore";
 import { useStore } from "zustand";
-import Items from "./items";
-import { themeStore } from "@/stores/themeStore";
+import Items from "./Items";
 
 export default function Explorer() {
   const { currentTheme } = useStore(themeStore);

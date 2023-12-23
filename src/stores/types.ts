@@ -20,7 +20,7 @@ export type ThemeType = {
 
 export type EditorType = {
   sourceMode: boolean;
-  setSourceMode: () => void;
+  setSourceMode: (e: boolean) => void;
   currentPage: string;
   setCurrentPage: (e: string) => void;
   tabs: string[];

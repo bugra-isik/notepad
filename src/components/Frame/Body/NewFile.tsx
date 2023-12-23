@@ -1,8 +1,8 @@
-import { themeStore } from "@/stores/themeStore";
-import { utilityStore } from "@/stores/utiltyStore";
+import { themeStore } from "@/Stores/ThemeStore";
+import { utilityStore } from "@/Stores/UtiltyStore";
 import { useStore } from "zustand";
 
-export default function NewTab() {
+export default function NewFile() {
   const { auxTheme } = useStore(themeStore);
   const { setCreateModal } = useStore(utilityStore);
 

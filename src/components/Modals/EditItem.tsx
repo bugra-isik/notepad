@@ -1,26 +1,36 @@
+import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
-import { editorStore } from "@/stores/editorStore";
-import { themeStore } from "@/stores/themeStore";
-import { utilityStore } from "@/stores/utiltyStore";
+import { editorStore } from "@/Stores/EditorStore";
+import { utilityStore } from "@/Stores/UtiltyStore";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useStore } from "zustand";
 
 export default function EditItem() {
   const { setEditModal } = useStore(utilityStore);
-  const { currentTheme } = useStore(themeStore);
-  const { items, setItems, currentItem, tabs, setTabs, setCurrentPage } =
-    useStore(editorStore);
+  const { currentTheme, auxTheme } = useStore(themeStore);
+  const {
+    items,
+    setItems,
+    currentItem,
+    tabs,
+    setTabs,
+    setCurrentPage,
+    setContent,
+  } = useStore(editorStore);
   const [toggle, setToggle] = useState<number>(1);
   const ref = useRef<HTMLInputElement>(null);
 
-  const renameData = async (title: string) => {
-    await db.myData.update(currentItem, { title: title });
-  };
+  const renameData = useCallback(
+    async (title: string) => {
+      await db.myData.update(currentItem, { title: title });
+    },
+    [currentItem],
+  );
 
-  const deleteData = async (title: string) => {
+  const deleteData = useCallback(async (title: string) => {
     await db.myData.delete(title);
-  };
+  }, []);
 
   const CurrentToggle = ({ value }: { value: number }) => {
     switch (true) {
@@ -77,6 +87,7 @@ export default function EditItem() {
                     renameData(ref.current.value);
                   }
                 }}
+                style={{ color: auxTheme }}
               >
                 Confirm
               </button>
@@ -115,6 +126,7 @@ export default function EditItem() {
                   deleteData(currentItem);
                   setItems(items.filter((e) => e !== currentItem));
                   setTabs(tabs.filter((e) => e !== currentItem));
+                  setContent("");
                   setEditModal();
                 }}
               >

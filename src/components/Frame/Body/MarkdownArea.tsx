@@ -3,8 +3,8 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { stackoverflowDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
-import { editorStore } from "@/stores/editorStore";
-import { useEffect, useRef } from "react";
+import { editorStore } from "@/Stores/EditorStore";
+import { useCallback, useEffect, useRef } from "react";
 import { db } from "@/db";
 
 export default function MarkdownArea() {
@@ -30,11 +30,14 @@ export default function MarkdownArea() {
     readScroll();
   }, [currentPage]);
 
-  const writeScroll = async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    const scrollRatio = scrollTop / (scrollHeight - clientHeight);
-    await db.myData.update(currentPage, { scroll: scrollRatio });
-  };
+  const writeScroll = useCallback(
+    async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {
+      const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+      const scrollRatio = scrollTop / (scrollHeight - clientHeight);
+      await db.myData.update(currentPage, { scroll: scrollRatio });
+    },
+    [currentPage],
+  );
 
   return (
     <motion.span
@@ -46,7 +49,7 @@ export default function MarkdownArea() {
       onScroll={(e) => writeScroll(e)}
     >
       <Markdown
-        className={`markdown flex flex-col pb-80`}
+        className={`markdown flex flex-col whitespace-pre-line pb-80`}
         children={content}
         components={{
           code(props) {

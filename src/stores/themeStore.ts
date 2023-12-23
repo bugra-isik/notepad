@@ -1,5 +1,5 @@
-import { ThemeType } from "./types";
 import { create } from "zustand";
+import { ThemeType } from "./Types";
 
 export const themes: Record<
   string,
