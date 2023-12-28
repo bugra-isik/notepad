@@ -11,6 +11,7 @@ export const themes: Record<
     bg3: string;
     text: string;
     border: string;
+    divider:string
     hover: string;
     scrollColor: string;
     color1: string;
@@ -24,6 +25,7 @@ export const themes: Record<
     bg3: "bg-[#b3b3b3]",
     text: "text-[#b3b3b3]",
     border: "border-[#b3b3b3]/50",
+    divider: "border-[#1e1e1e]",
     hover: "hover:bg-[#b3b3b3]/10",
     scrollColor: "scroll1",
     color1: "text-[#8a5cf5]",
@@ -36,6 +38,7 @@ export const themes: Record<
     bg3: "bg-[#5c5c5c]",
     text: "text-[#5c5c5c]",
     border: "border-[#5c5c5c]/50",
+    divider: "border-[#ffffff]",
     hover: "hover:bg-[#5c5c5c]/10",
     scrollColor: "scroll2",
     color1: "text-[#8a5cf5]",
@@ -48,6 +51,7 @@ export const themes: Record<
     bg3: "bg-[#bec6cf]",
     text: "text-[#bec6cf]",
     border: "border-[#bec6cf]/50",
+    divider: "border-[#1c2127]",
     hover: "hover:bg-[#bec6cf]/10",
     scrollColor: "scroll3",
     color1: "text-[#8a5cf5]",
@@ -60,6 +64,7 @@ export const themes: Record<
     bg3: "bg-[#b3b3b3]",
     text: "text-[#b3b3b3]",
     border: "border-[#b3b3b3]/50",
+    divider: "border-[#100e17]",
     hover: "hover:bg-[#b3b3b3]/10",
     scrollColor: "scroll3",
     color1: "text-[#8a5cf5]",

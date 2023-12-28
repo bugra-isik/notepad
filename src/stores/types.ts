@@ -7,6 +7,7 @@ export type ThemeType = {
     bg3: string;
     text: string;
     border: string;
+    divider: string;
     hover: string;
     scrollColor: string;
     color1: string;
@@ -40,4 +41,6 @@ export type Utility = {
   setEditModal: () => void;
   deleteAllDataModal: boolean;
   setDeleteAllDataModal: () => void;
+  searchModal: boolean;
+  setSearchModal: () => void;
 };

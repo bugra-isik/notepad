@@ -59,7 +59,7 @@ export default function MarkdownArea() {
               // @ts-expect-error SyntaxHighlighter
               <SyntaxHighlighter
                 {...rest}
-                // showLineNumbers
+                showLineNumbers
                 PreTag="div"
                 children={String(children).replace(/\n$/, "")}
                 language={match[1]}

@@ -9,6 +9,8 @@ const utilityStore = create<Utility>()((set) => ({
   deleteAllDataModal: false,
   setDeleteAllDataModal: () =>
     set((e) => ({ deleteAllDataModal: !e.deleteAllDataModal })),
+  searchModal: false,
+  setSearchModal: () => set((e) => ({ searchModal: !e.searchModal })),
 }));
 
 export { utilityStore };

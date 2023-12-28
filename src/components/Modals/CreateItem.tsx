@@ -8,20 +8,16 @@ import { useStore } from "zustand";
 
 export default function CreateItem() {
   const { setCreateModal } = useStore(utilityStore);
-  const { currentTheme,auxTheme } = useStore(themeStore);
+  const { currentTheme, auxTheme } = useStore(themeStore);
   const { items, setItems } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
 
-  const addData = useCallback(
-    async (title: string) => {
-      await db.myData.put({
-        title: title,
-        content: "",
-      });
-    },
-    [],
-  )
-  
+  const addData = useCallback(async (title: string) => {
+    await db.myData.put({
+      title: title,
+      content: "",
+    });
+  }, []);
 
   return (
     <motion.div
@@ -62,7 +58,7 @@ export default function CreateItem() {
                 setCreateModal();
               }
             }}
-            style={{color:auxTheme}}
+            style={{ color: auxTheme }}
           >
             Create
           </button>

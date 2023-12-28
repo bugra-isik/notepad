@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { themeStore } from "@/Stores/ThemeStore";
 import { editorStore } from "@/Stores/EditorStore";
 import { utilityStore } from "@/Stores/UtiltyStore";
+import { MdDragIndicator } from "react-icons/md";
 
 export default function Items() {
   const { currentTheme, auxTheme } = useStore(themeStore);
@@ -20,8 +21,6 @@ export default function Items() {
   const { setEditModal, setCreateModal } = useStore(utilityStore);
   const { hover, bg2 } = currentTheme;
   const [dragStart, setDragStart] = useState<number>(0);
-
-  
 
   const getData = useCallback(
     async (currentTab: string) => {
@@ -50,7 +49,7 @@ export default function Items() {
       });
     };
     putItems();
-  }, [items]);  
+  }, [items]);
 
   const switchItems = useCallback(
     (arg1: number) => {
@@ -71,17 +70,17 @@ export default function Items() {
   );
 
   return (
-    <div className={`mb-4 grid grid-cols-1 gap-y-2`}>
+    <aside className={`mb-4 grid grid-cols-1 gap-y-2  overflow-y-scroll`}>
       {items.map((item, index) => (
         <button
-          key={index}
           draggable
           onDragOver={(e) => e.preventDefault()}
           onDragStart={() => setDragStart(index)}
           onDrop={() => {
             switchItems(index);
           }}
-          className={`${hover} ${bg2} relative flex h-8 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
+          key={index}
+          className={`${hover} ${bg2} relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
             setCurrentItem(item);
@@ -98,7 +97,7 @@ export default function Items() {
         >
           <p className={`flex size-full items-center`}>{item}</p>
           <i
-            className={`hidden text-lg`}
+            className={`mr-4 hidden`}
             onClick={(e) => {
               setCurrentItem(item);
               setEditModal();
@@ -107,15 +106,18 @@ export default function Items() {
           >
             <VscEdit />
           </i>
+          <i>
+            <MdDragIndicator />
+          </i>
         </button>
       ))}
       <button
-        className={`${currentTheme.hover} flex h-8 w-full items-center justify-center rounded text-start transition`}
+        className={`${currentTheme.hover} flex h-12 w-full items-center justify-center rounded text-start transition`}
         onClick={() => setCreateModal()}
         style={{ color: auxTheme }}
       >
         <VscAdd />
       </button>
-    </div>
+    </aside>
   );
 }
