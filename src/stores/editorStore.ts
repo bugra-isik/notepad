@@ -14,6 +14,8 @@ const editorStore = create<EditorType>()((set) => ({
   setItems: (e) => set(() => ({ items: e })),
   currentItem: "",
   setCurrentItem: (e) => set(() => ({ currentItem: e })),
+  searchedItem:undefined,
+  setSearchedItem: (e) => set(() => ({ searchedItem: e }))
 }));
 
 export { editorStore };

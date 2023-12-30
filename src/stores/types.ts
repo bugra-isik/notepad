@@ -32,6 +32,8 @@ export type EditorType = {
   setItems: (e: string[] | undefined) => void;
   currentItem: string;
   setCurrentItem: (e: string) => void;
+  searchedItem:string|undefined;
+  setSearchedItem: (e: string|undefined) => void;
 };
 
 export type Utility = {

@@ -12,7 +12,7 @@ export default function SideMenu() {
   const { auxTheme, currentTheme } = useStore(themeStore);
   const { width } = useWindowSize();
   const [ref, hovering] = useHover();
-  const { bg2 } = currentTheme;
+  const { bg2, border } = currentTheme;
 
   useEffect(() => {
     if (width) {
@@ -31,10 +31,10 @@ export default function SideMenu() {
 
   return (
     <section
-      className={`${translateX} ${bg2} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center  font-sans drop-shadow-2xl backdrop-blur transition-transform duration-500 ease-out`}
-      style={{
-        borderLeft: `1px solid ${auxTheme}`,
-      }}
+      className={`${translateX} ${bg2} ${border} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center border-l  font-sans drop-shadow-2xl backdrop-blur transition-transform duration-500 ease-out`}
+      // style={{
+      //   borderLeft: `1px solid ${auxTheme}`,
+      // }}
     >
       <button
         ref={ref}
