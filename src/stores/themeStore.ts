@@ -23,7 +23,7 @@ export const themes: Record<
     bg1: "bg-[#262626]",
     bg2: "bg-[#1e1e1e]",
     bg3: "bg-[#b3b3b3]",
-    text: "text-[#b3b3b3]",
+    text: "text-[#3b3b3b]",
     border: "border-[#b3b3b3]/50",
     divider: "border-[#1e1e1e]",
     hover: "hover:bg-[#b3b3b3]/10",

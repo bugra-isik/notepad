@@ -4,12 +4,15 @@ import { stackoverflowDark } from "react-syntax-highlighter/dist/esm/styles/hljs
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
 import { editorStore } from "@/Stores/EditorStore";
-import { useCallback, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect } from "react";
 import { db } from "@/db";
 
-export default function MarkdownArea() {
+export default function MarkdownArea({
+  mdRef,
+}: {
+  mdRef: RefObject<HTMLElement>;
+}) {
   const { content, currentPage } = useStore(editorStore);
-  const mdRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const readScroll = async () => {
@@ -28,7 +31,7 @@ export default function MarkdownArea() {
         );
     };
     readScroll();
-  }, [currentPage]);
+  }, [currentPage, mdRef]);
 
   const writeScroll = useCallback(
     async (e: React.UIEvent<HTMLSpanElement, UIEvent>) => {

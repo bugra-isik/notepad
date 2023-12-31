@@ -5,13 +5,11 @@ import SideMenu from "./Components/SideMenu";
 import Modals from "./Components/Modals";
 
 export default function App() {
-  const { currentTheme, fontFamily } = useStore(themeStore);
-  const { scrollColor } = currentTheme;  
-  
+  const { fontFamily } = useStore(themeStore);
 
   return (
     <main
-      className={`${scrollColor} ${fontFamily} relative flex h-screen w-screen min-w-full overflow-hidden  text-white transition`}
+      className={`${fontFamily} relative flex h-screen w-screen min-w-full overflow-hidden text-white transition`}
     >
       <Container />
       <SideMenu />

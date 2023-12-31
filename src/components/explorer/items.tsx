@@ -21,7 +21,6 @@ export default function Items() {
     setSearchedItem,
   } = useStore(editorStore);
   const { setEditModal, setCreateModal } = useStore(utilityStore);
-  const { hover, bg2 } = currentTheme;
   const [dragStart, setDragStart] = useState<number>(0);
 
   useEffect(() => {
@@ -102,7 +101,7 @@ export default function Items() {
           onDrop={() => {
             switchItems(index);
           }}
-          className={`${hover} ${bg2} relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
+          className={`bg-color1 relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
             setCurrentItem(item);
@@ -115,7 +114,7 @@ export default function Items() {
           onMouseLeave={(e) =>
             e.currentTarget.children[1].classList.add("hidden")
           }
-          style={{}}
+          
         >
           <p className={`flex size-full items-center`}>{item}</p>
           <i

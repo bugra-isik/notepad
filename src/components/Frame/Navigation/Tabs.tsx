@@ -9,8 +9,8 @@ export default function Tabs() {
   const { currentTheme } = useStore(themeStore);
   const { currentPage, setCurrentPage, tabs, setTabs, setContent } =
     useStore(editorStore);
-    const [dragStart, setDragStart] = useState<number>(0);
-    const { bg2, hover,divider } = currentTheme;
+  const [dragStart, setDragStart] = useState<number>(0);
+  const { bg2, hover, divider } = currentTheme;
 
   useEffect(() => {
     const getDataAtStartup = async () => {
@@ -79,7 +79,7 @@ export default function Tabs() {
     },
     [dragStart, setTabs, tabs],
   );
-  
+
   return (
     <ul className={`flex h-full w-full items-end overflow-x-scroll`}>
       {tabs.map((item, index) => {
@@ -95,7 +95,7 @@ export default function Tabs() {
             }}
             className={`${
               isCurrentPage && bg2
-            } ${hover} ${divider} flex h-full w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate border-r px-5 pb-1 focus:bg-black`}
+            } ${hover} ${divider} ${index===0&&"border-l-2"} border-r-2 flex h-full w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate px-5 pb-1 focus:bg-black`}
             onClick={() => {
               setCurrentPage(item);
               tabs.length !== 0 && getData(item);

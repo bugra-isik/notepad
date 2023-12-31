@@ -13,8 +13,14 @@
   display: none !important;
 }
 
-:root {
-  --dynamicColor: #8a5cf5;
+@layer base {
+  :root {
+    --dynamicColor: rgb(138, 92, 245);
+    --C1: 38 38 38;
+    --C2: 30 30 30;
+    --C3: 179 179 179;
+    --C4: 59 59 59;
+  }
 }
 
 @layer components {
@@ -73,7 +79,7 @@ blockquote {
   color: white;
   padding: 10px 20px;
   border-left: 0.5rem solid var(--dynamicColor);
-  background-color: #1c1b1b;
+  background-color: #262626;
   quotes: "\\201C" "\\201D" "\\2018" "\\2019";
 }
 

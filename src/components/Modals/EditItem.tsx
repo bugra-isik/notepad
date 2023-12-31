@@ -46,7 +46,7 @@ export default function EditItem() {
               <button className={`font-black`} onClick={() => setToggle(1)}>
                 Rename
               </button>
-              <button className={`font-thin`} onClick={() => setToggle(2)}>
+              <button className={``} onClick={() => setToggle(2)}>
                 Delete
               </button>
             </div>
@@ -112,7 +112,7 @@ export default function EditItem() {
             }}
           >
             <div className={`grid w-2/3 grid-cols-2 place-items-center gap-4`}>
-              <button className={`font-thin`} onClick={() => setToggle(1)}>
+              <button className={``} onClick={() => setToggle(1)}>
                 Rename
               </button>
               <button className={`font-black`} onClick={() => setToggle(2)}>
@@ -129,6 +129,7 @@ export default function EditItem() {
                   setContent("");
                   setEditModal();
                 }}
+                style={{ color: auxTheme }}
               >
                 Delete
               </button>

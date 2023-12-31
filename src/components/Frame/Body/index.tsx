@@ -4,8 +4,9 @@ import NewFile from "./NewFile";
 import Textarea from "./Textarea";
 import MarkdownArea from "./MarkdownArea";
 import Headline from "./Headline";
+import { RefObject } from "react";
 
-export default function Body() {
+export default function Body({ mdRef }:{mdRef:RefObject<HTMLElement>}) {
   const { sourceMode, currentPage } = useStore(editorStore);
 
   return (
@@ -18,7 +19,7 @@ export default function Body() {
       ) : sourceMode === true ? (
         <Textarea />
       ) : (
-        <MarkdownArea />
+        <MarkdownArea mdRef={mdRef}/>
       )}
     </section>
   );
