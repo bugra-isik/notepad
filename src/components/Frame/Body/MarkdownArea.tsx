@@ -42,6 +42,7 @@ export default function MarkdownArea({
     [currentPage],
   );
 
+
   return (
     <motion.span
       ref={mdRef}
@@ -52,7 +53,7 @@ export default function MarkdownArea({
       onScroll={(e) => writeScroll(e)}
     >
       <Markdown
-        className={`markdown flex flex-col whitespace-pre-line pb-80`}
+        className={`markdown zartzurt flex text-c3 flex-col whitespace-pre-line pb-80`}
         children={content}
         components={{
           code(props) {

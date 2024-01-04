@@ -8,7 +8,7 @@ import { utilityStore } from "@/Stores/UtiltyStore";
 import { MdDragIndicator } from "react-icons/md";
 
 export default function Items() {
-  const { currentTheme, auxTheme } = useStore(themeStore);
+  const { auxTheme } = useStore(themeStore);
   const {
     items,
     setItems,
@@ -101,7 +101,7 @@ export default function Items() {
           onDrop={() => {
             switchItems(index);
           }}
-          className={`bg-color1 relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
+          className={`bg-c2 hover:bg-c3/10 relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
             setCurrentItem(item);
@@ -114,7 +114,6 @@ export default function Items() {
           onMouseLeave={(e) =>
             e.currentTarget.children[1].classList.add("hidden")
           }
-          
         >
           <p className={`flex size-full items-center`}>{item}</p>
           <i
@@ -133,7 +132,7 @@ export default function Items() {
         </button>
       ))}
       <button
-        className={`${currentTheme.hover} flex h-12 w-full items-center justify-center rounded text-start transition`}
+        className={`flex hover:bg-c3/10 h-12 w-full items-center justify-center rounded text-start transition`}
         onClick={() => setCreateModal()}
         style={{ color: auxTheme }}
       >

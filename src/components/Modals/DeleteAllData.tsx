@@ -7,7 +7,7 @@ import { useCallback } from "react";
 
 export default function DeleteAllData() {
   const { setDeleteAllDataModal } = useStore(utilityStore);
-  const { currentTheme, auxTheme } = useStore(themeStore);
+  const {  auxTheme } = useStore(themeStore);
   const deleteTable = useCallback(async () => await db.myData.clear(), []);
 
   return (
@@ -15,14 +15,14 @@ export default function DeleteAllData() {
       transition={{ ease: "easeOut" }}
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
-      className={`absolute inset-0 z-[999] grid place-items-center bg-black/75`}
+      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm`}
       onClick={() => {
         setDeleteAllDataModal();
       }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <div
-        className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-evenly rounded-3xl px-16 text-xl`}
+        className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-evenly rounded-lg px-16 text-xl`}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -32,7 +32,7 @@ export default function DeleteAllData() {
         </h1>
         <div className={`flex w-full items-center justify-between`}>
           <button
-            className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
+            className={` rounded px-2 py-1 text-main-color`}
             onClick={(e) => {
               e.stopPropagation();
               setDeleteAllDataModal();
@@ -44,7 +44,7 @@ export default function DeleteAllData() {
             Delete
           </button>
           <button
-            className={`${currentTheme.hover} rounded px-2 py-1`}
+            className={`rounded px-2 py-1`}
             onClick={() => {
               setDeleteAllDataModal();
             }}

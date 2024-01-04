@@ -1,18 +1,4 @@
-export type ThemeType = {
-  currentTheme: {
-    id: string;
-    bg0: string;
-    bg1: string;
-    bg2: string;
-    bg3: string;
-    text: string;
-    border: string;
-    divider: string;
-    hover: string;
-    scrollColor: string;
-    color1: string;
-  };
-  setCurrentTheme: (e: string) => void;
+export type ThemeType = {  
   fontFamily: string;
   setFontFamily: (e: string) => void;
   auxTheme: string;

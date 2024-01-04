@@ -8,7 +8,7 @@ import { useStore } from "zustand";
 
 export default function CreateItem() {
   const { setCreateModal } = useStore(utilityStore);
-  const { currentTheme, auxTheme } = useStore(themeStore);
+  const { auxTheme } = useStore(themeStore);
   const { items, setItems } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -24,14 +24,14 @@ export default function CreateItem() {
       transition={{ ease: "easeOut" }}
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
-      className={`absolute inset-0 z-[999] grid place-items-center bg-black/75`}
+      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm`}
       onClick={() => {
         setCreateModal();
       }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <div
-        className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-evenly rounded-3xl px-16 text-xl`}
+        className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-evenly rounded-lg px-16 text-xl`}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -41,11 +41,11 @@ export default function CreateItem() {
           ref={ref}
           type="text"
           autoFocus
-          className={`${currentTheme.bg2} ${currentTheme.hover} h-1/4 w-full rounded px-4 outline-none transition`}
+          className={`bg-c2 h-1/4 w-full rounded px-4 outline-none transition`}
         />
         <div className={`flex w-full items-center justify-between`}>
           <button
-            className={`${currentTheme.hover} rounded px-2 py-1`}
+            className={`rounded px-2 py-1`}
             onClick={(e) => {
               e.stopPropagation();
               if (
@@ -63,7 +63,7 @@ export default function CreateItem() {
             Create
           </button>
           <button
-            className={`${currentTheme.hover} rounded px-2 py-1`}
+            className={` rounded px-2 py-1`}
             onClick={() => {
               setCreateModal();
             }}

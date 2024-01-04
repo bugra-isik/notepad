@@ -9,10 +9,9 @@ import { themeStore } from "@/Stores/ThemeStore";
 
 export default function SideMenu() {
   const [translateX, setTranslateX] = useState<string>("translate-x-full");
-  const { auxTheme, currentTheme } = useStore(themeStore);
+  const { auxTheme } = useStore(themeStore);
   const { width } = useWindowSize();
   const [ref, hovering] = useHover();
-  const { bg2, border } = currentTheme;
 
   useEffect(() => {
     if (width) {
@@ -31,7 +30,7 @@ export default function SideMenu() {
 
   return (
     <section
-      className={`${translateX} ${bg2} ${border} absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center border-l  font-sans drop-shadow-2xl backdrop-blur transition-transform duration-500 ease-out`}
+      className={`${translateX} bg-c2 border-c1 absolute inset-y-0 right-0 z-50 flex w-1/5 select-none items-center justify-center border-l-4  font-sans drop-shadow-2xl backdrop-blur transition-transform duration-500 ease-out`}
       // style={{
       //   borderLeft: `1px solid ${auxTheme}`,
       // }}

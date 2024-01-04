@@ -3,14 +3,11 @@ import { editorStore } from "@/Stores/EditorStore";
 import { db } from "@/db";
 import { useCallback, useEffect, useState } from "react";
 import { VscClose } from "react-icons/vsc";
-import { themeStore } from "@/Stores/ThemeStore";
 
 export default function Tabs() {
-  const { currentTheme } = useStore(themeStore);
   const { currentPage, setCurrentPage, tabs, setTabs, setContent } =
     useStore(editorStore);
   const [dragStart, setDragStart] = useState<number>(0);
-  const { bg2, hover, divider } = currentTheme;
 
   useEffect(() => {
     const getDataAtStartup = async () => {
@@ -81,7 +78,7 @@ export default function Tabs() {
   );
 
   return (
-    <ul className={`flex h-full w-full items-end overflow-x-scroll`}>
+    <ul className={`flex text-c3 h-full w-full items-end overflow-x-scroll`}>
       {tabs.map((item, index) => {
         const isCurrentPage = item === currentPage;
         return (
@@ -93,9 +90,9 @@ export default function Tabs() {
             onDrop={() => {
               switchTabs(index);
             }}
-            className={`${
-              isCurrentPage && bg2
-            } ${hover} ${divider} ${index===0&&"border-l-2"} border-r-2 flex h-full w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate px-5 pb-1 focus:bg-black`}
+            className={`${isCurrentPage && "bg-c2"} ${
+              index === 0 && "border-l-2"
+            } flex h-full w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate border-r-2 px-5 pb-1 focus:bg-black`}
             onClick={() => {
               setCurrentPage(item);
               tabs.length !== 0 && getData(item);

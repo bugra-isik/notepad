@@ -19,7 +19,7 @@ export default function Headline() {
   };
 
   return (
-    <section className={`flex w-4/5 justify-center py-3`}>
+    <section className={`flex text-c3 w-4/5 justify-center py-3`}>
       <div
         className={`relative flex cursor-copy items-center  bg-transparent text-center focus:outline-none`}
         onClick={(e) => handle(e)}

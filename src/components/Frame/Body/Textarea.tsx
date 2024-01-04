@@ -1,4 +1,3 @@
-import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
 import { editorStore } from "@/Stores/EditorStore";
 import { motion } from "framer-motion";
@@ -7,7 +6,6 @@ import { useStore } from "zustand";
 
 export default function Textarea() {
   const { content, setContent, currentPage } = useStore(editorStore);
-  const { currentTheme } = useStore(themeStore);
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -78,7 +76,7 @@ export default function Textarea() {
           ? ""
           : "Embrace the blank page, let your thoughts dance..."
       }
-      className={`${currentTheme.bg1} flex h-full w-4/5 resize-none pb-80 pr-10 pt-20 focus:outline-none`}
+      className={`bg-c1 zartzurt text-c3 flex h-full w-4/5 resize-none pb-80 pr-10 pt-20 focus:outline-none`}
       onChange={(e) => {
         setContent(e.currentTarget.value);
         addData(e.currentTarget.value);

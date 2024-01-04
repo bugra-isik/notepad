@@ -8,7 +8,7 @@ import { useStore } from "zustand";
 
 export default function EditItem() {
   const { setEditModal } = useStore(utilityStore);
-  const { currentTheme, auxTheme } = useStore(themeStore);
+  const {  auxTheme } = useStore(themeStore);
   const {
     items,
     setItems,
@@ -37,7 +37,7 @@ export default function EditItem() {
       case value === 1:
         return (
           <div
-            className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-between rounded-3xl px-16 py-4 text-xl`}
+            className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-between rounded-lg px-16 py-4 text-xl`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -54,11 +54,11 @@ export default function EditItem() {
               ref={ref}
               type="text"
               autoFocus
-              className={`${currentTheme.bg2} ${currentTheme.hover} h-1/4 w-full rounded px-4 outline-none transition`}
+              className={`bg-c2  h-1/4 w-full rounded px-4 outline-none transition`}
             />
             <div className={`flex w-full items-center justify-between`}>
               <button
-                className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
+                className={` rounded px-2 py-1 text-main-color`}
                 onClick={(e) => {
                   e.stopPropagation();
                   if (
@@ -92,7 +92,7 @@ export default function EditItem() {
                 Confirm
               </button>
               <button
-                className={`${currentTheme.hover} rounded px-2 py-1`}
+                className={` rounded px-2 py-1`}
                 onClick={() => {
                   setEditModal();
                 }}
@@ -106,7 +106,7 @@ export default function EditItem() {
       case value === 2:
         return (
           <div
-            className={`${currentTheme.bg2} ${currentTheme.text} flex h-48 w-96 flex-col items-center justify-between rounded-3xl px-16 py-4 text-xl`}
+            className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-between rounded-lg px-16 py-4 text-xl`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -121,7 +121,7 @@ export default function EditItem() {
             </div>
             <div className={`flex w-full items-center justify-between`}>
               <button
-                className={`${currentTheme.hover} rounded px-2 py-1 text-main-color`}
+                className={` rounded px-2 py-1 text-main-color`}
                 onClick={() => {
                   deleteData(currentItem);
                   setItems(items.filter((e) => e !== currentItem));
@@ -134,7 +134,7 @@ export default function EditItem() {
                 Delete
               </button>
               <button
-                className={`${currentTheme.hover} rounded px-2 py-1`}
+                className={` rounded px-2 py-1`}
                 onClick={() => {
                   setEditModal();
                 }}
@@ -152,7 +152,7 @@ export default function EditItem() {
       transition={{ ease: "easeOut" }}
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
-      className={`absolute inset-0 z-[999] grid place-items-center bg-black/75`}
+      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm`}
       onClick={() => {
         setEditModal();
       }}
