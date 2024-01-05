@@ -36,6 +36,9 @@
   .h4 {
     @apply text-xs sm:text-base md:text-xl lg:text-xs xl:text-base 2xl:text-xl;
   }
+  .btn-hover {
+    @apply hover:bg-c3/10;
+  }
 }
 
 .markdown > * {

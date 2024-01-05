@@ -101,7 +101,7 @@ export default function Items() {
           onDrop={() => {
             switchItems(index);
           }}
-          className={`bg-c2 hover:bg-c3/10 relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
+          className={`bg-c2 btn-hover relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
             setCurrentItem(item);
@@ -132,7 +132,7 @@ export default function Items() {
         </button>
       ))}
       <button
-        className={`flex hover:bg-c3/10 h-12 w-full items-center justify-center rounded text-start transition`}
+        className={`flex btn-hover h-12 w-full items-center justify-center rounded text-start transition`}
         onClick={() => setCreateModal()}
         style={{ color: auxTheme }}
       >

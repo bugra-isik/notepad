@@ -24,14 +24,14 @@ export default function CreateItem() {
       transition={{ ease: "easeOut" }}
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
-      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm`}
+      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm text-c3`}
       onClick={() => {
         setCreateModal();
       }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <div
-        className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-evenly rounded-lg px-16 text-xl`}
+        className={`bg-c2 flex h-48 w-96 flex-col items-center justify-evenly rounded-lg px-16 text-xl`}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -41,7 +41,7 @@ export default function CreateItem() {
           ref={ref}
           type="text"
           autoFocus
-          className={`bg-c2 h-1/4 w-full rounded px-4 outline-none transition`}
+          className={`bg-c2 h-1/4 w-full rounded px-4 outline-none transition btn-hover`}
         />
         <div className={`flex w-full items-center justify-between`}>
           <button

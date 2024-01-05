@@ -2,7 +2,7 @@ import { Data, db } from "@/db";
 // import { editorStore } from "@/Stores/EditorStore";
 import { utilityStore } from "@/Stores/UtiltyStore";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useStore } from "zustand";
 import { useLiveQuery } from "dexie-react-hooks";
 import { VscSearch } from "react-icons/vsc";
@@ -15,7 +15,6 @@ export default function CreateItem() {
   const { setSearchedItem } = useStore(editorStore);
   const [inputValue, setInputValue] = useState<string>("");
   const [results, setResults] = useState<Data[]>();
-  // const { items, setItems } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
 
   useLiveQuery(
@@ -32,16 +31,6 @@ export default function CreateItem() {
     [inputValue],
   );
 
-  const scrollToResult = (inputValue: string) => {
-    const elements = document.querySelectorAll(".markdown *");
-    elements.forEach((element) => {
-      if (element.innerText.includes("import { Data, db }")) {
-        const parentDiv = element.closest("div"); // Metnin içinde olduğu en yakın div elementini bul
-        console.log(element); // Bu div elementini konsola yazdır
-      }
-    });
-  };
-
   const Query = () => (
     <div
       className={`grid w-2/3 grid-cols-1 gap-4 overflow-y-scroll text-xs text-c3`}
@@ -51,14 +40,13 @@ export default function CreateItem() {
         .map((e, index) => (
           <motion.button
             key={index}
-            className={`h-20 bg-c1 p-4 text-start hover:bg-c3/10`}
+            className={`btn-hover h-20 bg-c1 p-4 text-start`}
             onClick={() => {
               setSearchedItem(e.title);
               setSearchModal();
-              scrollToResult(inputValue);
             }}
           >
-            <div className={`text-base`} style={{ color: auxTheme }}>
+            <div className={`text-base font-bold`} style={{ color: auxTheme }}>
               {e.title}
             </div>
             <div className={`truncate text-sm`}>{e.content}</div>
@@ -66,6 +54,19 @@ export default function CreateItem() {
         ))}
     </div>
   );
+
+  useEffect(() => {
+    function handleKeyUp(event: KeyboardEvent) {
+      if (event.key === 'Escape') {       
+        setSearchModal()
+      }
+    }
+    document.addEventListener('keyup',(e) => handleKeyUp(e));
+    return () => {
+      document.removeEventListener('keyup', (e) => handleKeyUp(e));
+    };
+  }, [setSearchModal]);
+  
 
   return (
     <motion.div
@@ -75,7 +76,7 @@ export default function CreateItem() {
       className={`absolute inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm`}
       onClick={() => {
         setSearchModal();
-      }}
+      }}      
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <div

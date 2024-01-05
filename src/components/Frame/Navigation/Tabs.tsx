@@ -92,7 +92,7 @@ export default function Tabs() {
             }}
             className={`${isCurrentPage && "bg-c2"} ${
               index === 0 && "border-l-2"
-            } flex h-full w-40 flex-shrink-0 cursor-pointer select-none items-end justify-between truncate border-r-2 px-5 pb-1 focus:bg-black`}
+            } flex h-full w-40 flex-shrink-0 border-c2 cursor-pointer select-none items-end justify-between truncate border-r-2 px-5 pb-1 focus:bg-black btn-hover`}
             onClick={() => {
               setCurrentPage(item);
               tabs.length !== 0 && getData(item);

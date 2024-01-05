@@ -7,7 +7,7 @@ export default function Search() {
 
   return (
     <button
-      className={`bg-c2 hover:bg-c3/10 border-c3 flex h-16 items-center justify-center gap-4 rounded border`}
+      className={`bg-c2 btn-hover border-c3 flex h-16 items-center justify-center gap-4 rounded border`}
       onClick={() => setSearchModal()}
     >
       <VscSearch />

@@ -28,10 +28,10 @@ export default function Navigation({
   });
 
   return (
-    <nav className={`bg-c1 text-c3 relative z-50 flex h-8 w-full items-end`}>
+    <nav className={`relative z-50 flex max-h-8 w-full items-end bg-c1 text-c3`}>
       <Tabs />
       <button
-        className={`bg-c2 bg-bg0 flex h-full items-center gap-4 px-8 py-1`}
+        className={`bg-bg0 flex h-full items-center gap-4 bg-c2 px-8 py-1`}
       >
         <i className={``} onClick={handlePrint}>
           <VscDesktopDownload />

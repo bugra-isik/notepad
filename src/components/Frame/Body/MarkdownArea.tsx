@@ -42,7 +42,6 @@ export default function MarkdownArea({
     [currentPage],
   );
 
-
   return (
     <motion.span
       ref={mdRef}
@@ -53,7 +52,7 @@ export default function MarkdownArea({
       onScroll={(e) => writeScroll(e)}
     >
       <Markdown
-        className={`markdown zartzurt flex text-c3 flex-col whitespace-pre-line pb-80`}
+        className={`markdown zartzurt flex flex-col whitespace-pre-line pb-80 text-c3`}
         children={content}
         components={{
           code(props) {
@@ -62,8 +61,9 @@ export default function MarkdownArea({
             return match ? (
               // @ts-expect-error SyntaxHighlighter
               <SyntaxHighlighter
+              wrapLines              
                 {...rest}
-                showLineNumbers
+                // showLineNumbers
                 PreTag="div"
                 children={String(children).replace(/\n$/, "")}
                 language={match[1]}
