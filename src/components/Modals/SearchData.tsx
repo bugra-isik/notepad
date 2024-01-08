@@ -2,12 +2,13 @@ import { Data, db } from "@/db";
 // import { editorStore } from "@/Stores/EditorStore";
 import { utilityStore } from "@/Stores/UtiltyStore";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useStore } from "zustand";
 import { useLiveQuery } from "dexie-react-hooks";
 import { VscSearch } from "react-icons/vsc";
 import { editorStore } from "@/Stores/EditorStore";
 import { themeStore } from "@/Stores/ThemeStore";
+import { useDraggable } from "react-use-draggable-scroll";
 
 export default function CreateItem() {
   const { setSearchModal } = useStore(utilityStore);
@@ -16,6 +17,9 @@ export default function CreateItem() {
   const [inputValue, setInputValue] = useState<string>("");
   const [results, setResults] = useState<Data[]>();
   const ref = useRef<HTMLInputElement>(null);
+  const dragRef =
+    useRef<HTMLDivElement>() as MutableRefObject<HTMLInputElement>;
+  const { events } = useDraggable(dragRef);
 
   useLiveQuery(
     () =>
@@ -33,7 +37,9 @@ export default function CreateItem() {
 
   const Query = () => (
     <div
+      ref={dragRef}
       className={`grid w-2/3 grid-cols-1 gap-4 overflow-y-scroll text-xs text-c3`}
+      {...events}
     >
       {results
         ?.filter((e) => e.content?.includes(inputValue))
@@ -57,16 +63,15 @@ export default function CreateItem() {
 
   useEffect(() => {
     function handleKeyUp(event: KeyboardEvent) {
-      if (event.key === 'Escape') {       
-        setSearchModal()
+      if (event.key === "Escape") {
+        setSearchModal();
       }
     }
-    document.addEventListener('keyup',(e) => handleKeyUp(e));
+    document.addEventListener("keyup", (e) => handleKeyUp(e));
     return () => {
-      document.removeEventListener('keyup', (e) => handleKeyUp(e));
+      document.removeEventListener("keyup", (e) => handleKeyUp(e));
     };
   }, [setSearchModal]);
-  
 
   return (
     <motion.div
@@ -76,7 +81,7 @@ export default function CreateItem() {
       className={`absolute inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm`}
       onClick={() => {
         setSearchModal();
-      }}      
+      }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <div
@@ -100,6 +105,7 @@ export default function CreateItem() {
             }}
           />
         </div>
+
         <AnimatePresence>
           <Query />
         </AnimatePresence>

@@ -2,12 +2,13 @@ import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
 import { editorStore } from "@/Stores/EditorStore";
 import { utilityStore } from "@/Stores/UtiltyStore";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useRef } from "react";
 import { useStore } from "zustand";
+import ModalAlert from "./ModalAlert";
 
 export default function CreateItem() {
-  const { setCreateModal } = useStore(utilityStore);
+  const { setCreateModal, setAlertModal, alertModal } = useStore(utilityStore);
   const { auxTheme } = useStore(themeStore);
   const { items, setItems } = useStore(editorStore);
   const ref = useRef<HTMLInputElement>(null);
@@ -19,19 +20,27 @@ export default function CreateItem() {
     });
   }, []);
 
+  const alertHandler = () => {
+    setAlertModal();
+    setTimeout(() => {
+      setAlertModal();
+    }, 2000);
+  };
+
   return (
     <motion.div
       transition={{ ease: "easeOut" }}
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
-      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm text-c3`}
+      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 text-c3 backdrop-blur-sm`}
       onClick={() => {
         setCreateModal();
       }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
+      <AnimatePresence>{alertModal && <ModalAlert />}</AnimatePresence>
       <div
-        className={`bg-c2 flex h-48 w-96 flex-col items-center justify-evenly rounded-lg px-16 text-xl`}
+        className={`flex h-48 w-96 flex-col items-center justify-evenly rounded-lg bg-c2 px-16 text-xl`}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -41,13 +50,16 @@ export default function CreateItem() {
           ref={ref}
           type="text"
           autoFocus
-          className={`bg-c2 h-1/4 w-full rounded px-4 outline-none transition btn-hover`}
+          className={`btn-hover h-1/4 w-full rounded bg-c2 px-4 outline-none transition`}
         />
         <div className={`flex w-full items-center justify-between`}>
           <button
             className={`rounded px-2 py-1`}
             onClick={(e) => {
               e.stopPropagation();
+              if (ref.current && items.includes(ref.current.value)) {
+                !alertModal && alertHandler();
+              }
               if (
                 ref.current &&
                 ref.current.value !== "" &&

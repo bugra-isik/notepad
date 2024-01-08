@@ -7,7 +7,7 @@ import { useCallback } from "react";
 
 export default function DeleteAllData() {
   const { setDeleteAllDataModal } = useStore(utilityStore);
-  const {  auxTheme } = useStore(themeStore);
+  const { auxTheme } = useStore(themeStore);
   const deleteTable = useCallback(async () => await db.myData.clear(), []);
 
   return (
@@ -22,13 +22,14 @@ export default function DeleteAllData() {
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
       <div
-        className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-evenly rounded-lg px-16 text-xl`}
+        className={`flex h-48 w-96 flex-col items-center justify-evenly rounded-lg bg-c2 px-16 text-xl text-c3`}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <h1 className={`text-center`}>
-          You are deleting all data. Do you want to proceed?
+          You are deleting all data. <br />
+          Do you want to proceed?
         </h1>
         <div className={`flex w-full items-center justify-between`}>
           <button

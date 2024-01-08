@@ -28,7 +28,9 @@ export default function Navigation({
   });
 
   return (
-    <nav className={`relative z-50 flex max-h-8 w-full items-end bg-c1 text-c3`}>
+    <nav
+      className={`relative z-50 flex max-h-8 min-h-8 w-full items-end bg-c1 text-c3`}
+    >
       <Tabs />
       <button
         className={`bg-bg0 flex h-full items-center gap-4 bg-c2 px-8 py-1`}

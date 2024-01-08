@@ -31,4 +31,6 @@ export type Utility = {
   setDeleteAllDataModal: () => void;
   searchModal: boolean;
   setSearchModal: () => void;
+  alertModal: boolean;
+  setAlertModal: () => void;
 };

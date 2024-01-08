@@ -19,23 +19,23 @@ export default function Headline() {
   };
 
   return (
-    <section className={`flex text-c3 w-4/5 justify-center py-3`}>
+    <section className={`flex w-4/5 justify-center py-3 text-c3`}>
       <div
         className={`relative flex cursor-copy items-center  bg-transparent text-center focus:outline-none`}
         onClick={(e) => handle(e)}
       >
         {tabs.length == 0 ? "about:blank" : currentPage}
-        {isCopyButton && (
-          <AnimatePresence>
+        <AnimatePresence>
+          {isCopyButton && (
             <motion.i
               animate={{ opacity: [0, 1] }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: [1, 0] }}
               className={`absolute left-full ml-4`}
             >
               <AiFillCopy />
             </motion.i>
-          </AnimatePresence>
-        )}
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

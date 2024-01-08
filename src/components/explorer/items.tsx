@@ -1,6 +1,6 @@
 import { useStore } from "zustand";
 import { useCallback, useEffect, useState } from "react";
-import { VscEdit, VscAdd } from "react-icons/vsc";
+import { VscEdit, VscAdd, VscStarEmpty } from "react-icons/vsc";
 import { db } from "@/db";
 import { themeStore } from "@/Stores/ThemeStore";
 import { editorStore } from "@/Stores/EditorStore";
@@ -22,6 +22,7 @@ export default function Items() {
   } = useStore(editorStore);
   const { setEditModal, setCreateModal } = useStore(utilityStore);
   const [dragStart, setDragStart] = useState<number>(0);
+  const [itemHover, setItemHover] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     // Explorer > Item component click() function when the searched content is clicked
@@ -89,6 +90,13 @@ export default function Items() {
     [dragStart, items, setItems],
   );
 
+  const deneme = useCallback(async (currentTab: string) => {
+    await db.myData.put({
+      title: currentTab,
+      starred: true,
+    });
+  }, []);
+
   return (
     <aside className={`mb-4 grid grid-cols-1 gap-y-2  overflow-y-scroll`}>
       {items.map((item, index) => (
@@ -101,38 +109,46 @@ export default function Items() {
           onDrop={() => {
             switchItems(index);
           }}
-          className={`bg-c2 btn-hover relative flex h-12 w-full items-center justify-between rounded px-4 text-start drop-shadow-lg`}
+          className={`btn-hover relative flex h-12 w-full items-center justify-between rounded bg-c2 px-4 text-start drop-shadow-lg`}
           onClick={() => {
             getData(item);
             setCurrentItem(item);
             !tabs.includes(item) && setTabs([...tabs, item]);
             setCurrentPage(item);
           }}
-          onMouseEnter={(e) =>
-            e.currentTarget.children[1].classList.remove("hidden")
-          }
-          onMouseLeave={(e) =>
-            e.currentTarget.children[1].classList.add("hidden")
-          }
+          onMouseEnter={() => setItemHover(index)}
+          onMouseLeave={() => setItemHover(undefined)}
         >
           <p className={`flex size-full items-center`}>{item}</p>
-          <i
-            className={`mr-4 hidden`}
-            onClick={(e) => {
-              setCurrentItem(item);
-              setEditModal();
-              e.stopPropagation();
-            }}
-          >
-            <VscEdit />
-          </i>
-          <i>
-            <MdDragIndicator />
-          </i>
+
+          <div className={`flex gap-4`}>
+            <i
+              className={`${itemHover === index ? "visible" : "invisible"}`}
+              onClick={(e) => {
+                setCurrentItem(item);
+                setEditModal();
+                e.stopPropagation();
+              }}
+            >
+              <VscEdit />
+            </i>
+            <i
+              className={`${itemHover === index ? "visible" : "invisible"}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                deneme(item);
+              }}
+            >
+              <VscStarEmpty />
+            </i>
+            <i>
+              <MdDragIndicator />
+            </i>
+          </div>
         </button>
       ))}
       <button
-        className={`flex btn-hover h-12 w-full items-center justify-center rounded text-start transition`}
+        className={`btn-hover flex h-12 w-full items-center justify-center rounded text-start transition`}
         onClick={() => setCreateModal()}
         style={{ color: auxTheme }}
       >

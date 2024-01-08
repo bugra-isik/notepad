@@ -2,13 +2,14 @@ import { themeStore } from "@/Stores/ThemeStore";
 import { db } from "@/db";
 import { editorStore } from "@/Stores/EditorStore";
 import { utilityStore } from "@/Stores/UtiltyStore";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useRef, useState } from "react";
 import { useStore } from "zustand";
+import ModalAlert from "./ModalAlert";
 
 export default function EditItem() {
-  const { setEditModal } = useStore(utilityStore);
-  const {  auxTheme } = useStore(themeStore);
+  const { setEditModal, setAlertModal, alertModal } = useStore(utilityStore);
+  const { auxTheme } = useStore(themeStore);
   const {
     items,
     setItems,
@@ -32,12 +33,19 @@ export default function EditItem() {
     await db.myData.delete(title);
   }, []);
 
+  const alertHandler = () => {
+    setAlertModal();
+    setTimeout(() => {
+      setAlertModal();
+    }, 2000);
+  };
+
   const CurrentToggle = ({ value }: { value: number }) => {
     switch (true) {
       case value === 1:
         return (
           <div
-            className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-between rounded-lg px-16 py-4 text-xl`}
+            className={`flex h-48 w-96 flex-col items-center justify-between rounded-lg bg-c2 px-16 py-4 text-xl`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -54,13 +62,16 @@ export default function EditItem() {
               ref={ref}
               type="text"
               autoFocus
-              className={`bg-c2  h-1/4 w-full rounded px-4 outline-none transition`}
+              className={`h-1/4  w-full rounded bg-c2 px-4 outline-none transition`}
             />
             <div className={`flex w-full items-center justify-between`}>
               <button
                 className={` rounded px-2 py-1 text-main-color`}
                 onClick={(e) => {
                   e.stopPropagation();
+                  if (ref.current && items.includes(ref.current.value)) {
+                    !alertModal && alertHandler();
+                  }
                   if (
                     ref.current &&
                     ref.current.value !== "" &&
@@ -106,7 +117,7 @@ export default function EditItem() {
       case value === 2:
         return (
           <div
-            className={`bg-c2 text-c4 flex h-48 w-96 flex-col items-center justify-between rounded-lg px-16 py-4 text-xl`}
+            className={`flex h-48 w-96 flex-col items-center justify-between rounded-lg bg-c2 px-16 py-4 text-xl text-c4`}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -152,12 +163,13 @@ export default function EditItem() {
       transition={{ ease: "easeOut" }}
       animate={{ opacity: [0, 1] }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
-      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 backdrop-blur-sm`}
+      className={`absolute inset-0 z-[999] grid place-items-center bg-black/50 text-c3 backdrop-blur-sm`}
       onClick={() => {
         setEditModal();
       }}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
+      <AnimatePresence>{alertModal && <ModalAlert />}</AnimatePresence>
       <CurrentToggle value={toggle} />
     </motion.div>
   );
